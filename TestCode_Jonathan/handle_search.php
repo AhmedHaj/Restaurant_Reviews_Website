@@ -1,4 +1,5 @@
-<!-- Currently this php code, as it stands, will generate a new webpage for easy testing. However this code could be function directly within index.html -->
+<!-- Currently this php code, as it stands, will generate a new webpage for easy testing. 
+	However this code could be function directly within index.html -->
 
 <!doctype html>
 <html>
