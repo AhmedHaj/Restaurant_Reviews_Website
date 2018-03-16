@@ -16,17 +16,29 @@
 		$database="simulat5_deepcan_test";
 
 		//open a connection to the Postgre database on the same server, using the connection information
-		$databaseconnection = pg_connect("localhost", $database, $username, $password);
+		$databaseconnection = pg_connect("host=localhost port=#### dbname=postgres user=postgres password=password");
+
+
+
+
+
+
+
+
+
+
+
+
 
 		//create query statements that will be executed
-		$query = "SELECT * FROM Sailors S, Reserves R, Boats B";
+		$query = "SELECT * FROM customer";
 
 		//execute the query
 		$results = pg_query($databaseconnection, $query);
 
 		//display the results on the screen, using a while loop to account for multiple rows/columns
 		echo "<table>\n";
-		while($row = pg_fetch_array($results, null, PGSQL_ASSOC)){
+		while($row = pg_fetch_array($results)){
 			echo "\t<tr>\n";
 			foreach ($row as $col_value){
 				echo "\t\t<td>$col_value</td>\n";
@@ -46,7 +58,7 @@
 					<p>You entered $termA $termB $termC </p>";
 
 		//close the database connection 
-		pg_close($databaseConnection);
+		pg_close($databaseconnection);
 
 		?>
 
