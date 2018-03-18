@@ -11,32 +11,25 @@
 		<?php #this php code handles input data from the search form on index.html
 
 		//Create variables for connection information to connect to the database
+		//Edit these variables according to your local server environment
+		$port="5432";
+		$database="simulat5_deepcan_test";
 		$username="simulat5_jon";
 		$password="2132Yousri";
-		$database="simulat5_deepcan_test";
+		
 
-		//open a connection to the Postgre database on the same server, using the connection information
-		$databaseconnection = pg_connect("host=localhost port=#### dbname=postgres user=postgres password=password");
-
-
-
-
-
-
-
-
-
-
-
+		//open a connection to the Postgre database on the slocal server, using the connection information
+		$databaseconnection = pg_connect("host=localhost port=5432 dbname=$database user=$username password=$password");
 
 
 		//create query statements that will be executed
-		$query = "SELECT * FROM customer";
+		$query = "SELECT * FROM Sailors S, Reserves R, Boats B";
 
 		//execute the query
 		$results = pg_query($databaseconnection, $query);
 
 		//display the results on the screen, using a while loop to account for multiple rows/columns
+		//This output has been formatted into tables using HTML for easy reading
 		echo "<table>\n";
 		while($row = pg_fetch_array($results)){
 			echo "\t<tr>\n";
