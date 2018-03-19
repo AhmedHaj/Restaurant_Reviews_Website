@@ -14,12 +14,15 @@
     2018-03-18 - HTML reworked to use the W3 CSS, Credit: www.w3schools.com
     2018-03-18 - Navigation bar added, styled search bar added planned to replace static search form
     2018-03-19 - Connected index.html to raters.html, Added star ratings to restaurants results list
+    2018-03-19 - Changed the left panel to sidebar that can be toggled. Nav bar now highlights selected page.
 
   Planned:
     -Add working links to navigation bar
     -Search bar
       -connect the new W3 search bar to PHP
-    -Add filters on the left panel
+    -SideBar
+        -Add search filters on the sidebar
+        -Work out quirky display issue of the side bar. How should this actually display?
     -Have results list generated dynamically in the PHP code
 
     -individual restraurant page(s)
@@ -39,7 +42,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  	<!-- This code points to a seperate CSS file which contains all the styling rules for the webpage aesthetics -->
+  	<!-- This code points to a seperate CSS files which contains all the styling rules for the webpage aesthetics -->
     <link href="w3.css" rel="stylesheet">
     <link href="w3-theme-red.css" rel="stylesheet">
   </head>
@@ -50,7 +53,6 @@
     <!-- HEADER -->
     <!-- The contents at the header of the webpage -->
     <header class="w3-container w3-padding" id="mainHeader">
-      <i onclick="w3_open()" class="fa fa-bars w3-xlarge w3-button w3-theme"></i>
         <div class="w3-center">
           <h1>Deep Can</h1>
               <img src="images/test-logo.png" alt="Test logo for Image loading" style="width: 120px; height: 120px;">
@@ -63,7 +65,7 @@
     <!-- NAVBAR -->
     <!-- The contents of the navigation bar under the header -->
     <div class="w3-bar w3-card w3-theme-d3" style="height:100%">
-      <a href="index.html" class="w3-bar-item w3-button w3-padding-16">Home</a>
+      <a href="index.html" class="w3-bar-item w3-button w3-padding-16 w3-theme-d1">Home</a>
       <a href="insert URL here" class="w3-bar-item w3-button w3-padding-16">Top Rated</a>
       <a href="raters.html" class="w3-bar-item w3-button w3-padding-16">Raters</a>
       <a href="insert URL here" class="w3-bar-item w3-button w3-padding-16">Link 4</a>
@@ -80,28 +82,31 @@
       </div>
     </div>
    
+
+   
+
       
 
     <!-- BODY -->
     <!-- The contents between the header and the footer of the webpage -->
     <div class="w3-row">
 
-      <!-- LEFT PANEL -->
-      <!-- The contents at the left hand panel of the webpage -->
-      <div class="w3-quarter w3-container w3-theme-l2">
-        <h5>Some stuff here?</h5>
-          <li><a href="https://www.google.ca/">Google</a></li>
-          <li><a href="https://news.ycombinator.com/">Hacker News</a></li>
-          <li><a href="https://developers.googleblog.com/">Google Developers Blog</a></li>
-          <li><a href="https://www.google.ca/">Google</a></li>
-          <li><a href="https://news.ycombinator.com/">Hacker News</a></li>
-          <li><a href="https://developers.googleblog.com/">Google Developers Blog</a></li>
-      </div>
 
+      <!-- SIDEBAR -->
+      <!-- The contents of the sidebar of the webpage, content visibility can be toggled with a button-->
+      <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="mainSidebar">
+          <button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close &times;</button>
+          <a href="https://www.google.ca/" class="w3-bar-item w3-button">Google</a>
+          <a href="https://news.ycombinator.com/" class="w3-bar-item w3-button">Hacker News</a>
+          <a href="https://developers.googleblog.com/" class="w3-bar-item w3-button">Google Developers Blog</a>
+      </div>
+      
 
       <!-- MAIN CONTENT -->
       <!-- The contents of the main body of the webpage, right of the left hand panel -->
-      <div class="w3-rest w3-container">       
+      <div class="w3-row w3-container" id="main">   
+
+      <button id="openNav" class="w3-buuton w3-red w3-xlarge" onclick="w3_open()">&#9776;</button>    
 
         <!-- Here is the search form for user entry, pressing the "submit" button (input type="submit") calls the php code (action="handle_search.php"). -->
         
@@ -192,21 +197,21 @@
         </li>
         <li class="w3-bar">
             <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
+            <img src="images/drink-icon-1.jpg" class="w3-bar-item w3 circle" style="width:85px">
             <div class="w3-bar-item">
-                <span class="w3-large">Pizza Palace</span>
+                <span class="w3-large">Bubble Bar</span>
                 <img src="images/star.png" style="width:15px">
                 <img src="images/star.png" style="width:15px">
                 <img src="images/star.png" style="width:15px">
                 <img src="images/star.png" style="width:15px">
                 <img src="images/star.png" style="width:15px">
                 <br>
-                <span>Only the best pizza</span>
+                <span>Some kind of fun with liquids... I don't want to know</span>
             </div>
         </li>
         <li class="w3-bar">
             <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
+            <img src="images/food-icon-1.png" class="w3-bar-item w3 circle" style="width:85px">
             <div class="w3-bar-item">
                 <span class="w3-large">Sushi Steakhouse</span>
                 <img src="images/star.png" style="width:15px">
@@ -221,12 +226,30 @@
     </div>
 
 
+
     <!-- FOOTER -->
     <!-- The contents of the footer at the bottom of the webpage -->
     <footer class="w3-container w3-center w3-theme">
       <h5>Copyright &copy; DeepCan.com</h5>
       <p class="w3-opacity">Jonathan Calles (8906650) and Ahmed Haj Abdel Khaleq (8223727)</p>
     </footer>
+
+
+    <!-- SIDEBAR JAVASCRIPT -->
+    <!-- This javascript controls the sidebar display. When you click on the menu icon in the top left corner it add a 25% left margin to the div element with id="main", i.e. it shifts the page content to the right. The value "25%" matches the width of the sidebar making it visible. -->
+    <script>
+        function w3_open() {
+            document.getElementById("main").style.marginLeft = "25%";
+            document.getElementById("mainSidebar").style.width = "25%";
+            document.getElementById("mainSidebar").style.display = "block";
+            document.getElementById("openNav").style.display = 'none';
+        }
+        function w3_close() {
+            document.getElementById("main").style.marginLeft = "0%";
+            document.getElementById("mainSidebar").style.display = "none";
+            document.getElementById("openNav").style.display = "inline-block";
+        }
+    </script>
 
 
   </body>

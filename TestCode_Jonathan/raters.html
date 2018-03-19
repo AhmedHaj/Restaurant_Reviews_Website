@@ -9,12 +9,13 @@
 
   Development History:
     2018-03-19 - Connected index.html to raters.html, Added icons for the raters results list
+    2018-03-19 - Nav bar now highlights selected page.
 
   Planned:
     -Add working links to navigation bar
     -Search bar
       -connect the new W3 search bar to PHP
-    -Add filters on the left panel
+    -Change left panel to sidebar to match index.html
     -Have results list generated dynamically in the PHP code
 
     -individual restraurant page(s)
@@ -33,7 +34,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  	<!-- This code points to a seperate CSS file which contains all the styling rules for the webpage aesthetics -->
+  	<!-- This code points to a seperate CSS files which contains all the styling rules for the webpage aesthetics -->
     <link href="w3.css" rel="stylesheet">
     <link href="w3-theme-indigo.css" rel="stylesheet">
   </head>
@@ -44,7 +45,6 @@
     <!-- HEADER -->
     <!-- The contents at the header of the webpage -->
     <header class="w3-container w3-padding" id="mainHeader">
-      <i onclick="w3_open()" class="fa fa-bars w3-xlarge w3-button w3-theme"></i>
         <div class="w3-center">
           <h1>Deep Can</h1>
               <img src="images/test-logo.png" alt="Test logo for Image loading" style="width: 120px; height: 120px;">
@@ -59,7 +59,7 @@
     <div class="w3-bar w3-card w3-theme-d3" style="height:100%">
       <a href="index.html" class="w3-bar-item w3-button w3-padding-16">Home</a>
       <a href="insert URL here" class="w3-bar-item w3-button w3-padding-16">Top Rated</a>
-      <a href="raters.html" class="w3-bar-item w3-button w3-padding-16">Raters</a>
+      <a href="raters.html" class="w3-bar-item w3-button w3-padding-16 w3-theme">Raters</a>
       <a href="insert URL here" class="w3-bar-item w3-button w3-padding-16">Link 4</a>
       <div class="w3-dropdown-hover">
         <button class="w3-button w3-padding-16">
@@ -135,7 +135,7 @@
         <label class="w3-text-indigo"><b>Search results could look something like this:</b></label>
         <li class="w3-bar">
             <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-avatar.png" class="w3-bar-item w3 circle" style="width:85px">
+            <img src="images/reviewer-004.png" class="w3-bar-item w3 circle" style="width:85px">
             <div class="w3-bar-item">
                 <span class="w3-large">William</span><br>
                 <span>Too much free time on his hands</span>
@@ -143,7 +143,7 @@
         </li>
         <li class="w3-bar">
             <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-avatar.png" class="w3-bar-item w3 circle" style="width:85px">
+            <img src="images/reviewer-003.png" class="w3-bar-item w3 circle" style="width:85px">
             <div class="w3-bar-item">
                 <span class="w3-large">Mary</span><br>
                 <span>Food Junkie</span>
@@ -151,7 +151,7 @@
         </li>
         <li class="w3-bar">
             <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-avatar.png" class="w3-bar-item w3 circle" style="width:85px">
+            <img src="images/reviewer-002.png" class="w3-bar-item w3 circle" style="width:85px">
             <div class="w3-bar-item">
                 <span class="w3-large">Bob</span><br>
                 <span>Self-proclaimed food critic</span>
@@ -159,7 +159,7 @@
         </li>
         <li class="w3-bar">
             <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-avatar.png" class="w3-bar-item w3 circle" style="width:85px">
+            <img src="images/reviewer-001.png" class="w3-bar-item w3 circle" style="width:85px">
             <div class="w3-bar-item">
                 <span class="w3-large">William</span><br>
                 <span>Too much free time on his hands</span>
