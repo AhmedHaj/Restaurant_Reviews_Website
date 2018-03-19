@@ -12,7 +12,7 @@
     2018-03-15 - HTML search query form created, and linked to php code
     2018-03-16 - Succesful proof of concept HTML->PHP->SQL->ServerDatabase->PHP->HTML
     2018-03-18 - HTML reworked to use the W3 CSS, Credit: www.w3schools.com
-    2018-03-18 - Navigation bar added, styled search bar added to replace static search form
+    2018-03-18 - Navigation bar added, styled search bar added planned to replace static search form
 
   Planned:
   -main page
@@ -127,6 +127,32 @@
         <input class="w3-input w3-border w3-animate-input w3-hover-light-grey" type="text" style="width:30%">
         <button class="w3-btn w3-theme">Search</button>
         <br><br><br>
+
+        <label class="w3-text-indigo"><b>Search results could look something like this:</b></label>
+        <li class="w3-bar">
+            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
+            <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
+            <div class="w3-bar-item">
+                <span class="w3-large">Taco Time</span><br>
+                <span>The best tacos in town</span>
+            </div>
+        </li>
+        <li class="w3-bar">
+            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
+            <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
+            <div class="w3-bar-item">
+                <span class="w3-large">Pizza Palace</span><br>
+                <span>Only the best pizza</span>
+            </div>
+        </li>
+        <li class="w3-bar">
+            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
+            <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
+            <div class="w3-bar-item">
+                <span class="w3-large">Sushi Steakhouse</span><br>
+                <span>Is it raw, or is it cooked ??</span>
+            </div>
+        </li>
 
       </div>
 
