@@ -17,10 +17,8 @@
 		$username="XXXX";
 		$password="XXXX";
 		
-
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
-
 
 		//create query statements that will be executed
 		$query = "SELECT * FROM Sailors S, Reserves R, Boats B";
@@ -40,9 +38,13 @@
 		}
 		echo "\t</tr>\n";
 		
+		//close the database connection 
+		pg_close($databaseconnection);
+
+
 
 			//Create a shorthand for the data in the form, i.e. variables we can use.
-			$termA = $_REQUEST['searchTermA'];
+			$termA = $_REQUEST["searchText"];
 			$termB = $_REQUEST['searchTermB'];
 			$termC = $_REQUEST['searchTermC'];
 
@@ -50,8 +52,9 @@
 			echo "<p> Search query terms received</p>
 					<p>You entered $termA $termB $termC </p>";
 
-		//close the database connection 
-		pg_close($databaseconnection);
+			for($x=0; $x<=10; $x++){
+				echo "The number is: $x <br>";
+			}
 
 		?>
 
