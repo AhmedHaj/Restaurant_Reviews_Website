@@ -28,58 +28,104 @@
 <html>
 
   <head>
+    <!-- A meta viewport gives the browser instructions on how to control the page's dimensions and scaling. i.e. when viewed on different types of devices -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
   	<!-- This code points to a seperate CSS file which contains all the styling rules for the webpage aesthetics -->
-    <link href="index.css" rel="stylesheet" media="screen" type="text/css"/>
+    <link href="w3.css" rel="stylesheet">
+    <link href="w3-theme-indigo.css" rel="stylesheet">
   </head>
 
 
   <body>
-    <div class="flex-container">
-      <!-- The contents at the header of the webpage -->
-      <header>
-        <h1>Deep Can</h1>
-        <img src="images/test-logo.png" alt="Test logo for Image loading" style="width: 100px; height: 100px;">
-        <h2>Restaurant Reviews<h2>
-      </header>
+
+    <!-- HEADER -->
+    <!-- The contents at the header of the webpage -->
+    <header class="w3-container w3-theme w3-padding" id="mainHeader">
+      <i onclick="w3_open()" class="fa fa-bars w3-xlarge w3-button w3-theme"></i>
+        <div class="w3-center">
+          <h1>Deep Can</h1>
+          <img src="images/test-logo.png" alt="Test logo for Image loading" style="width: 120px; height: 120px;">
+          <h2>Restaurant Reviews</h2>
+          <!--
+            <div class="w3-padding-32">
+              <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" onclick="document.getElementBy('id01').style.display='block'" style="font-weight:900;">Button</button>
+            </div>
+          -->
+        </div>
+    </header>
+
+
+
+    <!-- NAVBAR -->
+    <!-- The contents of the navigation bar under the header -->
+    <div class="w3-bar w3-theme-d2">
+      <a href="insert URL here" class="w3-bar-item w3-button w3-padding-16">Home</a>
+      <a href="insert URL here" class="w3-bar-item w3-button w3-padding-16">Ratings</a>
+      <a href="insert URL here" class="w3-bar-item w3-button w3-padding-16">Reviewers</a>
+      <a href="insert URL here" class="w3-bar-item w3-button w3-padding-16">Link 4</a>
+      <div class="w3-dropdown-hover">
+        <button class="w3-button w3-padding-16">
+            Dropdown
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="w3-dropdown-content w3-card-4 w3-bar-block">
+            <a href="insert javascript or url here" class="w3-bar-item w3-button">Link 1</a>
+            <a href="insert javascript or url here" class="w3-bar-item w3-button">Link 2</a>
+            <a href="insert javascript or url here" class="w3-bar-item w3-button">Link 3</a>
+        </div>
+      </div>
+    </div>
+   
+      
+
+    <!-- BODY -->
+    <!-- The contents in the main body of the webpage -->
+    <div class="w3-row w3-border">
 
       <!-- The contents at the left hand panel of the webpage -->
-      <nav class="nav">
-          <ul>
-            <li><a href="https://www.google.ca/">Google</a></li>
-            <li><a href="https://news.ycombinator.com/">Hacker News</a></li>
-            <li><a href="https://developers.googleblog.com/">Google Developers Blog</a></li>
-          </ul>
-        </nav>
+      <div class="w3-quarter w3-container w3-theme-l2">
+        <h5>Some stuff here?</h5>
+          <li><a href="https://www.google.ca/">Google</a></li>
+          <li><a href="https://news.ycombinator.com/">Hacker News</a></li>
+          <li><a href="https://developers.googleblog.com/">Google Developers Blog</a></li>
+          <li><a href="https://www.google.ca/">Google</a></li>
+          <li><a href="https://news.ycombinator.com/">Hacker News</a></li>
+          <li><a href="https://developers.googleblog.com/">Google Developers Blog</a></li>
+      </div>
 
-        <!-- The contents in the main body of the webpage -->
-        <article class="article">
-          <p>Code and PHP features here</p>
+      <!-- Here is a table containing textfields for user entry, pressing submit button (input type="submit") calls the php code (action="handle_search.php"). -->
+      <div>
+        <form action="handle_search.php" method="post">
+          <table>
+            <tr>
+              <td>Search Term A</td><td><input name="searchTermA"></td>  
+            </tr>
+             <tr>
+              <td>Search Term B</td><td><input name="searchTermB"></td>  
+            </tr>
+             <tr>
+              <td>Search Term B</td><td><input name="searchTermC"></td>  
+            </tr>
+            <tr>
+              <td><input type="submit" name="submit" value="Submit Search Query"></td>
+            </tr>
+          </table>
+        </form>
+      </div>
 
-          <!-- Here is a table containing textfields for user entry, pressing submit button (input type="submit") calls the php code (action="handle_search.php"). -->
-          <form action="handle_search.php" method="post">
-            <table>
-              <tr>
-                <td>Search Term A</td><td><input name="searchTermA"></td>  
-              </tr>
-               <tr>
-                <td>Search Term B</td><td><input name="searchTermB"></td>  
-              </tr>
-               <tr>
-                <td>Search Term B</td><td><input name="searchTermC"></td>  
-              </tr>
-              <tr>
-                <td><input type="submit" name="submit" value="Submit Search Query"></td>
-              </tr>
-              
-            </table>
-          </form>
-
-          
-        </article>
-
-        <!-- The contents of the footer at the bottom of the webpage -->
-        <footer>Copyright &copy; DeepCan.com</footer>
     </div>
+
+
+    <!-- FOOTER -->
+    <!-- The contents of the footer at the bottom of the webpage -->
+    <footer class="w3-container w3-center w3-theme">
+      <h5>Copyright &copy; DeepCan.com</h5>
+      <p class="w3-opacity">Jonathan Calles (8906650) and Ahmed Haj Abdel Khaleq (8223727)</p>
+    </footer>
+
+
   </body>
 
 
