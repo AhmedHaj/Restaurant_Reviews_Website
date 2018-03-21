@@ -2,7 +2,7 @@
 	This code supports the website  DeepCan.com
   
   Author: Jonathan Calles 8906650 (jcall057@uottawa.ca) and Ahmed Haj Abdel Khaleq 8223727 (ahaja032@uottawa.ca)
-	Last Updated: 2018-03-19
+	Last Updated: 2018-03-20
 
   Advisory:
   This website is a testing ground. Experimental and non-functional features may result.
@@ -14,15 +14,16 @@
     2018-03-18 - HTML reworked to use the W3 CSS, Credit: www.w3schools.com
     2018-03-18 - Navigation bar added, styled search bar added planned to replace static search form
     2018-03-19 - Connected index.html to raters.html, Added star ratings to restaurants results list
-    2018-03-19 - Changed the left panel to sidebar that can be toggled. Nav bar now highlights selected page.
+    2018-03-19 - Changed the left panel to W3 sidebar that can be toggled. Nav bar now highlights selected page.
+    2018-03-20 - Removed sidebar altogether in favour of accordion with filter options.
+    2018-03-20 - The W3 search is now connected to the PHP code.
 
   Planned:
     -Add working links to navigation bar
     -Search bar
       -connect the new W3 search bar to PHP
-    -SideBar
-        -Add search filters on the sidebar
-        -Work out quirky display issue of the side bar. How should this actually display?
+    -Filters Accordian
+        -Add connectivity to PHP from search filters
     -Have results list generated dynamically in the PHP code
 
     -individual restraurant page(s)
@@ -62,8 +63,8 @@
 
 
 
-    <!-- NAVBAR -->
-    <!-- The contents of the navigation bar under the header -->
+    <!-- NAVIGATION BAR -->
+    <!-- The contents of the navigation bar under the Header -->
     <div class="w3-bar w3-card w3-theme-d3" style="height:100%">
       <a href="index.html" class="w3-bar-item w3-button w3-padding-16 w3-theme-d1">Home</a>
       <a href="insert URL here" class="w3-bar-item w3-button w3-padding-16">Top Rated</a>
@@ -83,145 +84,118 @@
     </div>
    
 
-   
+    <!-- STATIC BODY CONTENT-->
+    <!-- The main contents below the Navigation Bar which is always displayed on the page -->
+    <div class="w3-container">
 
-      
-
-    <!-- BODY -->
-    <!-- The contents between the header and the footer of the webpage -->
-    <div class="w3-row">
-
-
-      <!-- SIDEBAR -->
-      <!-- The contents of the sidebar of the webpage, content visibility can be toggled with a button-->
-      <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="mainSidebar">
-          <button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close &times;</button>
-          <a href="https://www.google.ca/" class="w3-bar-item w3-button">Google</a>
-          <a href="https://news.ycombinator.com/" class="w3-bar-item w3-button">Hacker News</a>
-          <a href="https://developers.googleblog.com/" class="w3-bar-item w3-button">Google Developers Blog</a>
-      </div>
-      
-
-      <!-- MAIN CONTENT -->
-      <!-- The contents of the main body of the webpage, right of the left hand panel -->
-      <div class="w3-row w3-container" id="main">   
-
-      <button id="openNav" class="w3-buuton w3-red w3-xlarge" onclick="w3_open()">&#9776;</button>    
-
-        <!-- Here is the search form for user entry, pressing the "submit" button (input type="submit") calls the php code (action="handle_search.php"). -->
-        
-        <!--
+      <!-- SEARCH BAR -->
+      <!-- This is the proposed search bar to replace the form above, once connected to PHP -->
+      <form action="handle_search.php" class="w3-container" >
         <br>
-        <form action="handle_search.php" method="post">
-          <table>
-            <tr>
-                <td>Search Term A</td><td><input name="searchTermA"></td>  
-            </tr>
-             <tr>
-                <td>Search Term B</td><td><input name="searchTermB"></td>  
-            </tr>
-             <tr>
-                <td>Search Term B</td><td><input name="searchTermC"></td>  
-            </tr>
-            <tr>
-                <td><input type="submit" name="submit" value="Submit Search Query"></td>
-            </tr>
-          </table>
-        </form>
-        -->
-      
+        <label class="w3-text-red"><b>Looking for something?</b></label>
+            <input class="w3-input w3-border w3-animate-input w3-hover-light-grey" name="searchText" type="text" style="width:30%" placeholder="this still needs to be connected with the PHP">
+            <button class="w3-btn w3-theme">Search</button>
+      </form>
 
-        <!-- SEARCH BAR -->
-        <!-- This is the proposed search bar to replace the form above, once connected to PHP -->
-        <form action="handle_search.php" class="w3-container" >
-          <br>
-          <label class="w3-text-red"><b>Looking for something?</b></label>
-              <input class="w3-input w3-border w3-animate-input w3-hover-light-grey" type="text" style="width:30%" placeholder="this still needs to be connected with the PHP">
-              <button class="w3-btn w3-theme">Search</button>
-          <br><br><br>
-        </form>
-
-        <!-- RESULTS LIST -->
-        <!-- This a sample of the proposed format for the the results list, this would have to generated in the PHP code using the results of the SQL query -->
-        <label class="w3-text-red"><b>Search results could look something like this:</b></label>
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">Taco Time</span>
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <br>
-                <span>The best tacos in town</span>
-            </div>
-        </li>
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">Pizza Palace</span>
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <br>
-                <span>Only the best pizza</span>
-            </div>
-        </li>
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">Sushi Steakhouse</span>
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <br>
-                <span>Is it raw, or is it cooked ??</span>
-            </div>
-        </li>
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">Taco Time</span>
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <br>
-                <span>The best tacos in town</span>
-            </div>
-        </li>
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/drink-icon-1.jpg" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">Bubble Bar</span>
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <br>
-                <span>Some kind of fun with liquids... I don't want to know</span>
-            </div>
-        </li>
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/food-icon-1.png" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">Sushi Steakhouse</span>
-                <img src="images/star.png" style="width:15px">
-                <img src="images/star.png" style="width:15px">
-                <br>
-                <span>Is it raw, or is it cooked ??</span>
-            </div>
-        </li>
-
+      <br>
+      <button onclick="myFunction('filters')" class="w3-btn w3-block w3-theme w3-left-align">Filters Options</button>
+      <div id="filters" class="w3-container w3-hide">
+        <input class="w3-check" type="checkbox" checked="checked">
+        <label>Option 1</label>
+        <input class="w3-check" type="checkbox" checked="checked">
+        <label>Option 2</label>
+        <input class="w3-check" type="checkbox" checked="checked">
+        <label>Option 3</label>
       </div>
+      <br>
+
+    </div>
+
+  
+    <!-- DYNAMIC CONTENT -->
+    <!-- The main contents below the Static Body Content which is generated dynamically, as a result of searchers and user input. Dynamic content should be generated using PHP and the results of SQL queries -->
+    <div class="w3-row w3-container" id="main">   
+
+
+      <!-- RESULTS LIST -->
+      <!-- This a sample of the proposed format for the the results list, this would have to generated in the PHP code using the results of the SQL query -->
+      <label class="w3-text-red"><b>Search results could look something like this:</b></label>
+      <li class="w3-bar">
+          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
+          <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
+          <div class="w3-bar-item">
+              <span class="w3-large">Taco Time</span>
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <br>
+              <span>The best tacos in town</span>
+          </div>
+      </li>
+      <li class="w3-bar">
+          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
+          <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
+          <div class="w3-bar-item">
+              <span class="w3-large">Pizza Palace</span>
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <br>
+              <span>Only the best pizza</span>
+          </div>
+      </li>
+      <li class="w3-bar">
+          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
+          <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
+          <div class="w3-bar-item">
+              <span class="w3-large">Sushi Steakhouse</span>
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <br>
+              <span>Is it raw, or is it cooked ??</span>
+          </div>
+      </li>
+      <li class="w3-bar">
+          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
+          <img src="images/test-logo.png" class="w3-bar-item w3 circle" style="width:85px">
+          <div class="w3-bar-item">
+              <span class="w3-large">Taco Time</span>
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <br>
+              <span>The best tacos in town</span>
+          </div>
+      </li>
+      <li class="w3-bar">
+          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
+          <img src="images/drink-icon-1.jpg" class="w3-bar-item w3 circle" style="width:85px">
+          <div class="w3-bar-item">
+              <span class="w3-large">Bubble Bar</span>
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <br>
+              <span>Some kind of fun with liquids... I don't want to know</span>
+          </div>
+      </li>
+      <li class="w3-bar">
+          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
+          <img src="images/food-icon-1.png" class="w3-bar-item w3 circle" style="width:85px">
+          <div class="w3-bar-item">
+              <span class="w3-large">Sushi Steakhouse</span>
+              <img src="images/star.png" style="width:15px">
+              <img src="images/star.png" style="width:15px">
+              <br>
+              <span>Is it raw, or is it cooked ??</span>
+          </div>
+      </li>
 
     </div>
 
@@ -235,20 +209,17 @@
     </footer>
 
 
-    <!-- SIDEBAR JAVASCRIPT -->
-    <!-- This javascript controls the sidebar display. When you click on the menu icon in the top left corner it add a 25% left margin to the div element with id="main", i.e. it shifts the page content to the right. The value "25%" matches the width of the sidebar making it visible. -->
+    <!-- FILTERS ACCORDIAN -->
+    <!-- This javascript supports the toggling of showing/hiding the accordion with the filter opens. By changing the text in the HTML to include or remove "w3-show" it hides or shows the accordion contents. -->
     <script>
-        function w3_open() {
-            document.getElementById("main").style.marginLeft = "25%";
-            document.getElementById("mainSidebar").style.width = "25%";
-            document.getElementById("mainSidebar").style.display = "block";
-            document.getElementById("openNav").style.display = 'none';
+    function myFunction(id){
+        var x = document.getElementById(id);
+        if(x.className.indexOf("w3-show") == -1){
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
         }
-        function w3_close() {
-            document.getElementById("main").style.marginLeft = "0%";
-            document.getElementById("mainSidebar").style.display = "none";
-            document.getElementById("openNav").style.display = "inline-block";
-        }
+    }
     </script>
 
 
