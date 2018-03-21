@@ -44,6 +44,8 @@
 
 		//Create a shorthand for the data in the search form, i.e. a variable we can use.
 		$input = $_REQUEST["searchText"];
+		//Manually escape apostrophes in the string
+		$input = str_replace("'","''", $input;)
 
 		//Display the submitted information using the created variables inside an echo command
 		echo "<p> Search query term was received</p>
@@ -64,8 +66,13 @@
 			echo "<p> You entered an String.</p>
 					<p> Until I figure out what it means, here is some interesting data!</p>";
 
-			//create query statements that will be executed
-			$query = "SELECT * FROM Sailors S, Reserves R, Boats B";
+			//saves the input as an escaped string. Strings need to be sanitized before being used in an SQL query for safety, to escape non-compatible characters, take into account the current charset of the connection, and for security (e.g. SQL injections). SQL queries may not work if not using an escaped string variable.
+			//http://php.net/manual/en/function.pg-escape-string.php
+			$escapedinput = pg_escape_string($input);
+
+			//create query statements that will be executed. 
+			//Can use PHP variables, but note the {} that need to go around the PHP variables
+			$query = "SELECT * FROM menuitem M WHERE M.name LIKE '%{$escapedinput}%'";
 
 			//execute the query
 			$results = pg_query($databaseconnection, $query);
