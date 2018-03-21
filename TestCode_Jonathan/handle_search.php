@@ -45,7 +45,7 @@
 		//Create a shorthand for the data in the search form, i.e. a variable we can use.
 		$input = $_REQUEST["searchText"];
 		//Manually escape apostrophes in the string
-		$input = str_replace("'","''", $input;)
+		$input = str_replace("'","''", $input);
 
 		//Display the submitted information using the created variables inside an echo command
 		echo "<p> Search query term was received</p>
