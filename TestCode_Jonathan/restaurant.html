@@ -1,19 +1,10 @@
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="w3.css" rel="stylesheet">
-    <link href="w3-theme-indigo.css" rel="stylesheet">
-<!--
-<style>
-body {font-family: "Times New Roman", Georgia, Serif;}
-h1,h2,h3,h4,h5,h6 {
-    font-family: "Playfair Display";
-    letter-spacing: 5px;
-}
-</style>
--->
+    <link href="w3-theme-red.css" rel="stylesheet">
+
 <body>
 
 <!-- Header -->
@@ -27,19 +18,25 @@ h1,h2,h3,h4,h5,h6 {
 <div class="w3-content" style="max-width:1100px">
 
   <!-- About Section -->
-  <div class="w3-col w3-padding-64" id="about">
-    <div class="w3-center m6 w3-padding-large w3-hide-small">
-     <img src="images/test-logo.png" class="w3-round w3-image w3-opacity-min" alt="Deepcan" width="650" height="750">
+  <div class="w3-row w3-padding-64" id="about">
+    <div class="w3-col m6 w3-padding-large w3-hide-small">
+     <img src="images/test-logo.png" class="w3-round w3-image w3-opacity-min" alt="Table Setting" width="600" height="750">
+    </div>
+    <div class="w3-col m6 w3-padding-large">
+      <h1 class="w3-center">{Restaurant Name}</h1><br>
+      <h5 class="w3-center">{Opening Date}</h5>
+      <p class="w3-large">The Catering was founded in blabla by Mr. Smith in lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute iruredolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.We only use <span class="w3-tag w3-light-grey">seasonal</span> ingredients.</p>
+      <p class="w3-large w3-text-grey w3-hide-medium">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     </div>
   </div>
   
 
   <!-- Navbar -->
-  <div class="w3-bar w3-white w3-padding w3-card">
-   <div class="w3-container">
-    <button class="w3-bar-item w3-button tablink w3-black" onclick="openCity(event,'Reviews')">Reviews</button>
-    <button class="w3-bar-item w3-button tablink" onclick="openCity(event,'Menu')">Menu</button>
-    <button class="w3-bar-item w3-button tablink" onclick="openCity(event,'Contact')">Contact</button>
+  <div class="w3-bar w3-padding w3-card">
+   <div class="w3-container w3-theme-d3">
+    <button class="w3-bar-item w3-button tablink w3-red w3-hover-red" onclick="openTab(event,'Reviews')">Reviews</button>
+    <button class="w3-bar-item w3-button tablink w3-hover-red" onclick="openTab(event,'Menu')">Menu</button>
+    <button class="w3-bar-item w3-button tablink w3-hover-red" onclick="openTab(event,'Contact')">Contact</button>
   </div>
 
 
@@ -125,7 +122,7 @@ h1,h2,h3,h4,h5,h6 {
 
 <!-- Tab Selection -->
 <script>
-function openCity(evt, cityName) {
+function openTab(evt, tabName) {
   var i, x, tablinks;
   x = document.getElementsByClassName("city");
   for (i = 0; i < x.length; i++) {
@@ -133,10 +130,10 @@ function openCity(evt, cityName) {
   }
   tablinks = document.getElementsByClassName("tablink");
   for (i = 0; i < x.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" w3-black", "");
+      tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
   }
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " w3-black";
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " w3-red";
 }
 </script>
   
@@ -161,8 +158,9 @@ function openCity(evt, cityName) {
 </div>
 
 <!-- Footer -->
-<footer class="w3-center w3-light-grey w3-padding-32">
-  <p>Jonathan Calles (8906650) and Ahmed Haj Abdel Khaleq (8223727)</p>
+<footer class="w3-container w3-center w3-theme">
+  <h5>Copyright &copy; DeepCan.com</h5>
+  <p class="w3-opacity">Jonathan Calles (8906650) and Ahmed Haj Abdel Khaleq (8223727)</p>
 </footer>
 
 </body>
