@@ -17,6 +17,7 @@
 	    2018-03-20 - Proof of concept: the PHP code generates different HTML based on user input.
 	    2018-03-21 - Proof of concept: PHP generates different SQL queries based on user input.
 	    2018-03-29 - Proof of concept: PHP can now target specific items from the SQL query results.
+	    2018-03-29 - Proof of concept: PHP dynamically generates HTML list from user input and SQL query results.
 
   Planned:
     - Have the PHP generate dynamic HTML content based on SQL query results
@@ -25,9 +26,19 @@
 
 <!doctype html>
 <html>
-	<head>
-		<title>Search Query Feedback</title>
-	</head>
+
+	<!-- CONFIGURATIONS -->
+  	<head>
+  		<title>Search Query Feedback</title>
+
+    	<!-- A meta viewport gives the browser instructions on how to control the page's dimensions and scaling. i.e. when viewed on different types of devices -->
+    	<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  		<!-- This code points to a seperate CSS files which contains all the styling rules for the webpage aesthetics -->
+    	<link href="w3.css" rel="stylesheet">
+    	<link href="w3-theme-red.css" rel="stylesheet">
+  	</head>
 
 	<body>
 		<?php #this php code handles input data from the search form on index.html
@@ -107,15 +118,33 @@
 
 			
 
-			//loop through results, selecting and displaying specific items. In this example the menu item names.
-			//leverages the dimensions of $results as variables
+			//dynamically generate an HTML formatted list by looping through results. 
+			//leverages the dimensions of $results as variables, picks out specific data points. In this example the menu item names and descriptions.
 			$num_rows = pg_numrows($results);
 			$num_cols = pg_numfields($results);
 			for ($i=0; $i<$num_rows; $i++){
-				$val = pg_fetch_result($results, $i, 1);
-				echo "<p> $val </p>";
+				$val_name = pg_fetch_result($results, $i, 1);
+				$val_description = pg_fetch_result($results, $i, 4);
+
+				echo "<p>
+					<li class='w3-bar'>
+			          	<span onclick='this.parentElement.style.display='none'' class='w3-bar-item w3-button w3-xlarge w3-right'>&times;</span>
+			          	<img src='images/test-logo.png' class='w3-bar-item w3 circle' style='width:85px'>
+			          	<div class='w3-bar-item'>
+			             	<span class='w3-large'>$val_name</span>
+			              	<img src='images/star.png' style='width:15px'>
+			              	<img src='images/star.png' style='width:15px'>
+			              	<img src='images/star.png' style='width:15px'>
+			              	<img src='images/star.png' style='width:15px'>
+			              	<br>
+			              	<span>$val_description</span>
+	          		   	</div>
+	      			</li>
+	      		</p>";
 			}
 
+
+			
 
 			
 
