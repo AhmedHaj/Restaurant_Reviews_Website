@@ -5,7 +5,7 @@
 	However this code could function directly within index.html
   
   Author: Jonathan Calles 8906650 (jcall057@uottawa.ca) and Ahmed Haj Abdel Khaleq 8223727 (ahaja032@uottawa.ca)
-	Last Updated: 2018-03-20
+	Last Updated: 2018-03-29
 
   Advisory:
   This website is a testing ground. Experimental and non-functional features may result.
@@ -16,6 +16,7 @@
 	    2018-03-20 - The W3 search is now connected to the PHP code.
 	    2018-03-20 - Proof of concept: the PHP code generates different HTML based on user input.
 	    2018-03-21 - Proof of concept: PHP generates different SQL queries based on user input.
+	    2018-03-29 - Proof of concept: PHP can now target specific items from the SQL query results.
 
   Planned:
     - Have the PHP generate dynamic HTML content based on SQL query results
