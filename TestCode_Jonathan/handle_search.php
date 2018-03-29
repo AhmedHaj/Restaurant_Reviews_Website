@@ -18,6 +18,7 @@
 	    2018-03-21 - Proof of concept: PHP generates different SQL queries based on user input.
 	    2018-03-29 - Proof of concept: PHP can now target specific items from the SQL query results.
 	    2018-03-29 - Proof of concept: PHP dynamically generates HTML list from user input and SQL query results.
+	    2018-03-29 - Displays an error if no results were found matching the string input.
 
   Planned:
     - Have the PHP generate dynamic HTML content based on SQL query results
@@ -75,8 +76,8 @@
 			}
 		}
 		else {
-			echo "<p> You entered a String.</p>
-					<p> Until I figure out what it means, here is some interesting data!</p>";
+			echo "<p> You entered a String.</p>";
+
 
 			//saves the input as an escaped string. Strings need to be sanitized before being used in an SQL query for safety, to escape non-compatible characters, take into account the current charset of the connection, and for security (e.g. SQL injections). SQL queries may not work if not using an escaped string variable.
 			//http://php.net/manual/en/function.pg-escape-string.php
@@ -89,11 +90,20 @@
 			//execute the query
 			$results = pg_query($databaseconnection, $query);
 
+
+
 				//RAW OUTPUT 1 - PRINT AS ARRAY
 				//For testing, and understanding of what is actually retrieved:
 				//convert the rows from the result into a 2D array, then print the array
 				$arr = pg_fetch_all($results);
 				print_r($arr);
+
+
+				//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
+				if(empty($arr)){
+					echo "<p><b> Error - No results matching your query </b></p>";
+					echo "<p><b> Note: the search is case sensitive (for now) </b></p>";
+				}
 
 
 				//RAW OUTPUT 2 - DISPLAY AS TABLE
