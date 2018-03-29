@@ -15,9 +15,9 @@
 	    2018-03-16 - Succesful proof of concept HTML->PHP->SQL->ServerDatabase->PHP->HTML
 	    2018-03-20 - The W3 search is now connected to the PHP code.
 	    2018-03-20 - Proof of concept: the PHP code generates different HTML based on user input.
+	    2018-03-21 - Proof of concept: PHP generates different SQL queries based on user input.
 
   Planned:
-    - Generate dynamic SQL queries based on user input
     - Have the PHP generate dynamic HTML content based on SQL query results
 
 -->
@@ -33,10 +33,10 @@
 
 		//Create variables for connection information to connect to the database
 		//Edit these variables according to your local server environment
-		$port="XXXX";
-		$database="XXXX";
-		$username="XXXX";
-		$password="XXXX";
+		$port="5432";
+		$database="simulat5_deepcan_test";
+		$username="simulat5_jon";
+		$password="2132Yousri";
 		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
@@ -63,7 +63,7 @@
 			}
 		}
 		else {
-			echo "<p> You entered an String.</p>
+			echo "<p> You entered a String.</p>
 					<p> Until I figure out what it means, here is some interesting data!</p>";
 
 			//saves the input as an escaped string. Strings need to be sanitized before being used in an SQL query for safety, to escape non-compatible characters, take into account the current charset of the connection, and for security (e.g. SQL injections). SQL queries may not work if not using an escaped string variable.
@@ -77,17 +77,47 @@
 			//execute the query
 			$results = pg_query($databaseconnection, $query);
 
-			//display the results on the screen, using a while loop to account for multiple rows/columns
-			//This output has been formatted into tables using HTML for easy reading
-			echo "<table>\n";
-			while($row = pg_fetch_array($results)){
-				echo "\t<tr>\n";
-				foreach ($row as $col_value){
-					echo "\t\t<td>$col_value</td>\n";
+				//RAW OUTPUT 1 - PRINT AS ARRAY
+				//For testing, and understanding of what is actually retrieved:
+				//convert the rows from the result into a 2D array, then print the array
+				$arr = pg_fetch_all($results);
+				print_r($arr);
+
+
+				//RAW OUTPUT 2 - DISPLAY AS TABLE
+				//display the results on the screen using HTML to format, using a while loop to account for multiple rows/columns
+				echo "<table>\n";
+				while($row = pg_fetch_array($results)){
+					echo "\t<tr>\n";
+					foreach ($row as $col_value){
+						echo "\t\t<td>$col_value</td>\n";
+					}
+					echo "\t</tr>\n";
 				}
 				echo "\t</tr>\n";
+
+
+				//RAW OUTPUT 3 - DISPLAY SPECIFIC ELEMENT
+				//retrieve specific element from the results: ($results, row, column) 
+				$val = pg_fetch_result($results, 0, 1);
+				echo "<p> $val </p>";
+				$val = pg_fetch_result($results, 1, 1);
+				echo "<p> $val </p>";
+
+			
+
+			//loop through results, selecting and displaying specific items. In this example the menu item names.
+			//leverages the dimensions of $results as variables
+			$num_rows = pg_numrows($results);
+			$num_cols = pg_numfields($results);
+			for ($i=0; $i<$num_rows; $i++){
+				$val = pg_fetch_result($results, $i, 1);
+				echo "<p> $val </p>";
 			}
-			echo "\t</tr>\n";
+
+
+			
+
 			
 			//close the database connection 
 			pg_close($databaseconnection);
