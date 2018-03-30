@@ -128,7 +128,9 @@
 
 				echo "<p>
 					<li class='w3-bar'>
+					
 			          	<span onclick='this.parentElement.style.display='none'' class='w3-bar-item w3-button w3-xlarge w3-right'>&times;</span>
+			          	<a href='restaurant.html'>
 			          	<img src='images/test-logo.png' class='w3-bar-item w3 circle' style='width:85px'>
 			          	<div class='w3-bar-item'>
 			             	<span class='w3-large'>$val_name</span>
@@ -139,6 +141,7 @@
 			              	<br>
 			              	<span>$val_description</span>
 	          		   	</div>
+	          			</a>
 	      			</li>
 	      		</p>";
 			}
