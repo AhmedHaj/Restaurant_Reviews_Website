@@ -19,37 +19,21 @@
 	    2018-03-29 - Proof of concept: PHP can now target specific items from the SQL query results.
 	    2018-03-29 - Proof of concept: PHP dynamically generates HTML list from user input and SQL query results.
 	    2018-03-29 - Displays an error if no results were found matching the string input.
+	    2018-03-29 - Non-dynamic HTML code removed, as this PHP code will be referenced within other pages.
 
   Planned:
-    - Have the PHP generate dynamic HTML content based on SQL query results
+    - Return the list of items as clickable to open distinct pages
 
 -->
 
-<!doctype html>
-<html>
-
-	<!-- CONFIGURATIONS -->
-  	<head>
-  		<title>Search Query Feedback</title>
-
-    	<!-- A meta viewport gives the browser instructions on how to control the page's dimensions and scaling. i.e. when viewed on different types of devices -->
-    	<meta charset="UTF-8">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-  		<!-- This code points to a seperate CSS files which contains all the styling rules for the webpage aesthetics -->
-    	<link href="w3.css" rel="stylesheet">
-    	<link href="w3-theme-red.css" rel="stylesheet">
-  	</head>
-
-	<body>
-		<?php #this php code handles input data from the search form on index.html
+		<?php #this php code receives the search term as input from the user, searches the database, and generates the results.
 
 		//Create variables for connection information to connect to the database
 		//Edit these variables according to your local server environment
-		$port="5432";
-		$database="simulat5_deepcan_test";
-		$username="simulat5_jon";
-		$password="2132Yousri";
+		$port="XXXX";
+		$database="XXXX";
+		$username="XXXX";
+		$password="XXXX";
 		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
@@ -96,7 +80,9 @@
 				//For testing, and understanding of what is actually retrieved:
 				//convert the rows from the result into a 2D array, then print the array
 				$arr = pg_fetch_all($results);
+				/*
 				print_r($arr);
+				*/
 
 
 				//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
@@ -108,6 +94,7 @@
 
 				//RAW OUTPUT 2 - DISPLAY AS TABLE
 				//display the results on the screen using HTML to format, using a while loop to account for multiple rows/columns
+				/*
 				echo "<table>\n";
 				while($row = pg_fetch_array($results)){
 					echo "\t<tr>\n";
@@ -117,14 +104,17 @@
 					echo "\t</tr>\n";
 				}
 				echo "\t</tr>\n";
+				*/
 
 
 				//RAW OUTPUT 3 - DISPLAY SPECIFIC ELEMENT
 				//retrieve specific element from the results: ($results, row, column) 
+				/*
 				$val = pg_fetch_result($results, 0, 1);
 				echo "<p> $val </p>";
 				$val = pg_fetch_result($results, 1, 1);
 				echo "<p> $val </p>";
+				*/
 
 			
 
@@ -154,11 +144,6 @@
 			}
 
 
-			
-
-			
-
-			
 			//close the database connection 
 			pg_close($databaseconnection);
 
@@ -166,9 +151,3 @@
 
 		
 		?>
-
-
-	</body>
-	
-
-</html>
