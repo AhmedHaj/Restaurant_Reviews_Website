@@ -123,7 +123,7 @@
       <?php 
         #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
         #In this way we can recylce the search handler.
-        include 'handle_search_2.php';
+        include 'handle_search.php';
       ?>
 
     </div>
