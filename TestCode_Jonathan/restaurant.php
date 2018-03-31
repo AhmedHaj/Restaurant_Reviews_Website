@@ -69,59 +69,16 @@
 
 
   <!-- Reviews Tab -->
-  <div id="Reviews" class="w3-container w3-border city">
-    <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/rater-004.png" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">William</span><br>
-                <span>Too much free time on his hands</span>
-            </div>
-        </li>
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/rater-003.png" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">Mary</span><br>
-                <span>Food Junkie</span>
-            </div>
-        </li>
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/rater-002.png" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">Bob</span><br>
-                <span>Self-proclaimed food critic</span>
-            </div>
-        </li>
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/rater-001.png" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">William</span><br>
-                <span>Too much free time on his hands</span>
-            </div>
-        </li>
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-avatar.png" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">Mary</span><br>
-                <span>Food Junkie</span>
-            </div>
-        </li>
-        <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-            <img src="images/test-avatar.png" class="w3-bar-item w3 circle" style="width:85px">
-            <div class="w3-bar-item">
-                <span class="w3-large">Bob</span><br>
-                <span>Self-proclaimed food critic</span>
-            </div>
-        </li>
+  <div id="Reviews" class="w3-container w3-border tab">
+   <?php 
+        #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
+        #In this way we can recylce the search handler.
+        include 'ratings.php';
+    ?>
   </div>
 
   <!-- Menu Tab -->
-  <div id="Menu" class="w3-container w3-border city" style="display:none">
+  <div id="Menu" class="w3-container w3-border tab" style="display:none">
     <h1 class="w3-center">Our Menu</h1><br>
       <h4>Bread Basket</h4>
       <p class="w3-text-grey">Assortment of fresh baked fruit breads and muffins 5.50</p><br>
@@ -141,7 +98,7 @@
 
 
   <!-- Contact Tab -->
-  <div id="Contact" class="w3-container w3-border city" style="display:none">
+  <div id="Contact" class="w3-container w3-border tab" style="display:none">
     <p>We offer full-service catering for any event, large or small. We understand your needs and we will cater the food to satisfy the biggerst criteria of them all, both look and taste. Do not hesitate to contact us.</p>
     <p class="w3-text-blue-grey w3-large"><b>Catering Service, 42nd Living St, 43043 New York, NY</b></p>
     <p>You can also contact us by phone 00553123-2323 or email catering@catering.com, or you can send us a message here:</p>
@@ -152,7 +109,7 @@
 <script>
 function openTab(evt, tabName) {
   var i, x, tablinks;
-  x = document.getElementsByClassName("city");
+  x = document.getElementsByClassName("tab");
   for (i = 0; i < x.length; i++) {
       x[i].style.display = "none";
   }

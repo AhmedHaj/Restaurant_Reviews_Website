@@ -28,7 +28,7 @@
 		$port="5430";
 		$database="postgres";
 		$username="postgres";
-		$password="P9WGNNFTp4ssw0rd";
+		$password="XXXX";
 		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
