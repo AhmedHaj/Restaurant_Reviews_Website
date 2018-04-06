@@ -47,7 +47,6 @@
     </header>
 
 
-
     <!-- NAVIGATION BAR -->
     <!-- The contents of the navigation bar under the Header -->
     <div class="w3-bar w3-card w3-theme-d3" style="height:100%">
@@ -122,20 +121,6 @@
       <h5>Copyright &copy; DeepCan.com</h5>
       <p class="w3-opacity">Jonathan Calles (8906650) and Ahmed Haj Abdel Khaleq (8223727)</p>
     </footer>
-
-
-    <!-- SEARCH FILTERS ACCORDIAN -->
-    <!-- This javascript supports the toggling of showing/hiding the accordion with the filter opens. By changing the text in the HTML to include or remove "w3-show" it hides or shows the accordion contents. -->
-    <script>
-    function myFunction(id){
-        var x = document.getElementById(id);
-        if(x.className.indexOf("w3-show") == -1){
-            x.className += " w3-show";
-        } else {
-            x.className = x.className.replace(" w3-show", "");
-        }
-    }
-    </script>
 
 
   </body>
