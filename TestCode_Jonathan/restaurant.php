@@ -73,7 +73,7 @@
    <?php 
         #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
         #In this way we can recylce the search handler.
-        include 'ratings.php';
+        include 'restaurant_ratings.php';
     ?>
   </div>
 
