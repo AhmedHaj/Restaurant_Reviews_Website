@@ -1,12 +1,13 @@
 <!-- 
-	This code supports the website  DeepCan.com
-	Currently this php code, as it stands, will generate a new webpage for easy testing. 
-	However this code could function directly within index.html
+	This code supports the website  DeepCan.com 
+	This code could copied and used directly within other pages, but for efficiency and maintenance one instnaces of this code is being used by reference in multiple contexts. In this way it serves as universal search handler.
   
-  Author: Jonathan Calles 8906650 (jcall057@uottawa.ca) and Ahmed Haj Abdel Khaleq 8223727 (ahaja032@uottawa.ca)
-	Last Updated: 2018-03-30
-  Advisory:
-  This website is a testing ground. Experimental and non-functional features may result.
+	Author: Jonathan Calles 8906650 (jcall057@uottawa.ca) and Ahmed Haj Abdel Khaleq 8223727 (ahaja032@uottawa.ca)
+		Last Updated: 2018-04-06
+
+  	Advisory:
+  		This website is a testing ground. Experimental and non-functional features may result.
+	
 	Development History:
 	    2018-03-15 - HTML search query form created, and linked to php code
 	    2018-03-16 - Succesful proof of concept HTML->PHP->SQL->ServerDatabase->PHP->HTML
@@ -18,22 +19,29 @@
 	    2018-03-29 - Displays an error if no results were found matching the string input.
 	    2018-03-29 - Non-dynamic HTML code removed, as this PHP code will be referenced within other pages.
 	    2018-03-30 - Encodes row from SQL table to allow passing arrays to other pages.
-  Planned:
-    - Return the list of items as clickable to open distinct pages
+
+  	Planned:
+    	- Include some sort of backtrace to know which page called this PHP code
+    	- Have the PHP code execute the SQL search dynamically based on which page called it and the entered search terms
 -->
 
 		<?php #this php code receives the search term as input from the user, searches the database, and generates the results.
 		//Create variables for connection information to connect to the database
 		//Edit these variables according to your local server environment
-		$port="5430";
-		$database="postgres";
-		$username="postgres";
-		$password="XXXX";
+		$port="5432";
+		$database="simulat5_deepcan_test";
+		$username="simulat5_jon";
+		$password="2132Yousri";
 		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
+		
+		//Code and Variables from the referencing page are incorporated with this code by inclusion and can be referenced directly
+		echo "<p>The page which called this PHP code is:  $callingPage</p>";
+
 		//Create a shorthand for the data in the search form, i.e. a variable we can use.
 		$input = $_REQUEST["searchText"];
+
 		//Manually escape apostrophes in the string
 		$input = str_replace("'","''", $input);
 		//Display the submitted information using the created variables inside an echo command

@@ -107,7 +107,11 @@
       <!-- The results of searching the database will be displayed here -->
       <label class="w3-text-red"><b>Search results that match your query:</b></label>
       <?php 
-        #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
+        #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
+
+        #As the code of the seperate file is 'included' with this page any code/variables declared here will be combined with the code of the seperate php file. Variables to do not need to be passed explicitely.
+        $callingPage = "top_rated";
+
         #In this way we can recylce the search handler.
         include 'handle_search.php';
       ?>

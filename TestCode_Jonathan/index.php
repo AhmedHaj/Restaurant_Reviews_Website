@@ -88,8 +88,8 @@
 
       <!-- SEARCH BAR -->
       <!-- Here is the search form for user input, pressing the "search" button calls the php code within this same page (action="...$_SERVER["PHP_SELF"]);?>"). References in the PHP by the tag "searchText" -->
+      <!-- htmlspecialchars is being used here for security to prevent SQL injections -->
       <form class="w3-container" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
         <br>
         <label class="w3-text-red"><b>Looking for something?</b></label>
             <input class="w3-input w3-border w3-animate-input w3-hover-light-grey" name="searchText" type="text" style="width:30%" placeholder="connected to the PHP">
@@ -121,7 +121,11 @@
       <!-- The results of searching the database will be displayed here -->
       <label class="w3-text-red"><b>Search results that match your query:</b></label>
       <?php 
-        #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
+        #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
+
+        #As the code of the seperate file is 'included' with this page any code/variables declared here will be combined with the code of the seperate php file. Variables to do not need to be passed explicitely.
+        $callingPage = "index";
+
         #In this way we can recylce the search handler.
         include 'handle_search.php';
       ?>
