@@ -19,19 +19,19 @@
 	    2018-03-29 - Displays an error if no results were found matching the string input.
 	    2018-03-29 - Non-dynamic HTML code removed, as this PHP code will be referenced within other pages.
 	    2018-03-30 - Encodes row from SQL table to allow passing arrays to other pages.
+	    2018-04-06 - This code can detect where it was referenced from.
 
   	Planned:
-    	- Include some sort of backtrace to know which page called this PHP code
     	- Have the PHP code execute the SQL search dynamically based on which page called it and the entered search terms
 -->
 
 		<?php #this php code receives the search term as input from the user, searches the database, and generates the results.
 		//Create variables for connection information to connect to the database
 		//Edit these variables according to your local server environment
-		$port="5432";
-		$database="simulat5_deepcan_test";
-		$username="simulat5_jon";
-		$password="2132Yousri";
+		$port="XXXX";
+		$database="XXXX";
+		$username="XXXX";
+		$password="XXXX";
 		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
