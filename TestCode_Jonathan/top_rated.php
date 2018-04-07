@@ -51,7 +51,7 @@
     <!-- The contents of the navigation bar under the Header -->
     <div class="w3-bar w3-card w3-theme-d3" style="height:100%">
       <a href="index.php" class="w3-bar-item w3-button w3-padding-16">Home</a>
-      <a href="insert URL here" class="w3-bar-item w3-button w3-padding-16 w3-theme">Top Rated</a>
+      <a href="top_rated.php" class="w3-bar-item w3-button w3-padding-16 w3-theme">Top Rated</a>
       <a href="raters.php" class="w3-bar-item w3-button w3-padding-16">Raters</a>
       <a href="restaurant.php" class="w3-bar-item w3-button w3-padding-16">Restaurant</a>
       <div class="w3-dropdown-hover">
