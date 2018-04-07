@@ -113,8 +113,8 @@
       <!-- TEST BUTTONS -->
       <!-- Proof of concept, button presses change PHP variables to be used in the search handler switch case -->
       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="get">
-          <input type="submit" name="test_button_1" value="Button_1">
-          <input type="submit" name="test_button_2" value="Button_2">
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=test_button_1>Button_1</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=test_button_2>Button_2</button>
       </form>
 
     </div>
