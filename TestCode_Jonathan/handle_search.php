@@ -31,10 +31,10 @@
 
 		//Create variables for connection information to connect to the database
 		//Edit these variables according to your local server environment
-		$port="5432";
-		$database="simulat5_deepcan_test";
-		$username="simulat5_jon";
-		$password="2132Yousri";
+		$port="XXXX";
+		$database="XXXX";
+		$username="XXXX";
+		$password="XXXX";
 		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
