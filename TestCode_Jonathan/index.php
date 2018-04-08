@@ -59,12 +59,23 @@
     <!-- HEADER -->
     <!-- The contents at the header of the webpage -->
     <header class="w3-container w3-padding" id="mainHeader">
+        
+        <div class="w3-btn w3-display-topright w3-padding" style="width:150px">
+              LOG OUT/IN
+              <img src="images/rater-001.png" style="width:35px">
+        </div>
+
         <div class="w3-center">
+          <!--<img class="w3-display-topright w3-padding" src="images/rater-001.png" style="width:6%">-->
+          
           <h1>Deep Can</h1>
               <img src="images/test-logo.png" alt="Test logo for Image loading" style="width: 120px; height: 120px;">
           <h2>Restaurant Reviews</h2>
         </div>
+
     </header>
+
+    
 
 
 
