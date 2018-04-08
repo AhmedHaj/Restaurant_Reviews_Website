@@ -86,6 +86,18 @@
 
       <h3> This page probably doesn't need search filters</h3>
 
+      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="get">
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_B>Query_B</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_C>Query_C</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_D>Query_D</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_E>Query_E</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_K>Query_K</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_L>Query_L</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_M>Query_M</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_N>Query_N</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_O>Query_O</button>
+      </form>
+
     </div>
 
 
@@ -96,54 +108,39 @@
       <!-- SAMPLE RESULTS LIST -->
       <!-- This a SAMPLE of the proposed format for the the results list, this would have to generated in the PHP code using the results of the SQL query -->
       <label class="w3-text-indigo"><b>Search results could look something like this:</b></label>
-      <li class="w3-bar">
-          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-          <img src="images/rater-004.png" class="w3-bar-item w3 circle" style="width:85px">
-          <div class="w3-bar-item">
-              <span class="w3-large">William</span><br>
-              <span>Too much free time on his hands</span>
-          </div>
-      </li>
-      <li class="w3-bar">
-          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-          <img src="images/rater-003.png" class="w3-bar-item w3 circle" style="width:85px">
-          <div class="w3-bar-item">
-              <span class="w3-large">Mary</span><br>
-              <span>Food Junkie</span>
-          </div>
-      </li>
-      <li class="w3-bar">
-          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-          <img src="images/rater-002.png" class="w3-bar-item w3 circle" style="width:85px">
-          <div class="w3-bar-item">
-              <span class="w3-large">Bob</span><br>
-              <span>Self-proclaimed food critic</span>
-          </div>
-      </li>
-      <li class="w3-bar">
-          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-          <img src="images/rater-001.png" class="w3-bar-item w3 circle" style="width:85px">
-          <div class="w3-bar-item">
-              <span class="w3-large">William</span><br>
-              <span>Too much free time on his hands</span>
-          </div>
-      </li>
-      <li class="w3-bar">
-          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-          <img src="images/test-avatar.png" class="w3-bar-item w3 circle" style="width:85px">
-          <div class="w3-bar-item">
-              <span class="w3-large">Mary</span><br>
-              <span>Food Junkie</span>
-          </div>
-      </li>
-      <li class="w3-bar">
-          <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right">&times;</span>
-          <img src="images/test-avatar.png" class="w3-bar-item w3 circle" style="width:85px">
-          <div class="w3-bar-item">
-              <span class="w3-large">Bob</span><br>
-              <span>Self-proclaimed food critic</span>
-          </div>
-      </li>
+      <?php 
+
+        if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[Query_B])){
+          $CallingQuery= "b";
+        }
+        if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[Query_C])){
+          $CallingQuery= "c";
+        }
+        if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[Query_D])){
+          $CallingQuery= "d";
+        }
+        if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[Query_E])){
+          $CallingQuery= "e";
+        }
+        if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[Query_K])){
+          $CallingQuery= "k";
+        }
+        if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[Query_L])){
+          $CallingQuery= "l";
+        }
+        if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[Query_M])){
+          $CallingQuery= "m";
+        }
+        if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[Query_N])){
+          $CallingQuery= "n";
+        }
+        if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[Query_O])){
+          $CallingQuery= "o";
+        }
+
+        include 'test.php';
+
+        ?>
 
     </div>
 

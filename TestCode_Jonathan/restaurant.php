@@ -64,6 +64,7 @@
    <div class="w3-container w3-theme-d3">
     <button class="w3-bar-item w3-button tablink w3-red w3-hover-red" onclick="openTab(event,'Reviews')">Reviews</button>
     <button class="w3-bar-item w3-button tablink w3-hover-red" onclick="openTab(event,'Menu')">Menu</button>
+    <button class="w3-bar-item w3-button tablink w3-hover-red" onclick="openTab(event,'Locations')">Locations</button>
     <button class="w3-bar-item w3-button tablink w3-hover-red" onclick="openTab(event,'Contact')">Contact</button>
   </div>
 
@@ -71,31 +72,37 @@
   <!-- Reviews Tab -->
   <div id="Reviews" class="w3-container w3-border tab">
    <?php 
-        #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
-        #In this way we can recylce the search handler.
-        include 'restaurant_ratings.php';
+
+      $CallingTab = "Reviews";
+
+      #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
+      include 'restaurant_ratings.php';
     ?>
   </div>
 
   <!-- Menu Tab -->
   <div id="Menu" class="w3-container w3-border tab" style="display:none">
-    <h1 class="w3-center">Our Menu</h1><br>
-      <h4>Bread Basket</h4>
-      <p class="w3-text-grey">Assortment of fresh baked fruit breads and muffins 5.50</p><br>
-    
-      <h4>Honey Almond Granola with Fruits</h4>
-      <p class="w3-text-grey">Natural cereal of honey toasted oats, raisins, almonds and dates 7.00</p><br>
-    
-      <h4>Belgian Waffle</h4>
-      <p class="w3-text-grey">Vanilla flavored batter with malted flour 7.50</p><br>
-    
-      <h4>Scrambled eggs</h4>
-      <p class="w3-text-grey">Scrambled eggs, roasted red pepper and garlic, with green onions 7.50</p><br>
-    
-      <h4>Blueberry Pancakes</h4>
-      <p class="w3-text-grey">With syrup, butter and lots of berries 8.50</p>
+    <?php 
+
+      $CallingTab = "Menu";
+
+      #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
+      include 'restaurant_ratings.php';
+      ?>
+
   </div>
 
+
+  <!-- Locations Tab -->
+  <div id="Locations" class="w3-container w3-border tab" style="display:none">
+    <?php 
+
+      $CallingTab = "Locations";
+
+      #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
+      include 'restaurant_ratings.php';
+      ?>
+  </div>
 
   <!-- Contact Tab -->
   <div id="Contact" class="w3-container w3-border tab" style="display:none">
@@ -103,6 +110,7 @@
     <p class="w3-text-blue-grey w3-large"><b>Catering Service, 42nd Living St, 43043 New York, NY</b></p>
     <p>You can also contact us by phone 00553123-2323 or email catering@catering.com, or you can send us a message here:</p>
   </div>
+
 </div>
 
 <!-- Tab Selection -->
@@ -147,6 +155,19 @@ function openTab(evt, tabName) {
   <h5>Copyright &copy; DeepCan.com</h5>
   <p class="w3-opacity">Jonathan Calles (8906650) and Ahmed Haj Abdel Khaleq (8223727)</p>
 </footer>
+
+<!-- SEARCH FILTERS ACCORDION -->
+    <!-- This javascript supports the toggling of showing/hiding the accordion with the filter opens. By changing the text in the HTML to include or remove "w3-show" it hides or shows the accordion contents. -->
+    <script>
+    function myFunction(id){
+        var x = document.getElementById(id);
+        if(x.className.indexOf("w3-show") == -1){
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+    </script>
 
 </body>
 </html>

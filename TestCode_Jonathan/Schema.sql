@@ -348,3 +348,10 @@ INSERT INTO ratingItem(UserID,Date,ItemID,rating,comment) VALUES ('RA2','2015-05
 INSERT INTO ratingItem(UserID,Date,ItemID,rating,comment) VALUES ('RA4','2014-06-25','M38',1,'Drinks were phenomenal.');
 INSERT INTO ratingItem(UserID,Date,ItemID,rating,comment) VALUES ('RA6','2017-09-05','M38',2,'The food was too salty.');
 INSERT INTO ratingItem(UserID,Date,ItemID,rating,comment) VALUES ('RA7','2013-07-31','M40',4,'We waited more than 30 minutes for our food.');
+
+
+
+
+--updates to improve data to better reflect the queries
+INSERT INTO rating(UserID,Date,price,food,mood,staff,comments,restaurantID) VALUES ('RA1','2018-03-10',5,5,5,2,'Excellent Service!','R1');
+INSERT INTO rating(UserID,Date,price,food,mood,staff,comments,restaurantID) VALUES ('RA1','2018-04-04',1,1,3,2,'Service was bad today','R1');
