@@ -355,3 +355,4 @@ INSERT INTO ratingItem(UserID,Date,ItemID,rating,comment) VALUES ('RA7','2013-07
 --updates to improve data to better reflect the queries
 INSERT INTO rating(UserID,Date,price,food,mood,staff,comments,restaurantID) VALUES ('RA1','2018-03-10',5,5,5,2,'Excellent Service!','R1');
 INSERT INTO rating(UserID,Date,price,food,mood,staff,comments,restaurantID) VALUES ('RA1','2018-04-04',1,1,3,2,'Service was bad today','R1');
+INSERT INTO ratingItem(UserID,Date,ItemID,rating,comment) VALUES ('RA1','2015-05-02','M3',1,'I did not like it very much');
