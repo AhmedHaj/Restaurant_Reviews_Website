@@ -2,7 +2,7 @@
 	This code supports the website  DeepCan.com
   
   Author: Jonathan Calles 8906650 (jcall057@uottawa.ca) and Ahmed Haj Abdel Khaleq 8223727 (ahaja032@uottawa.ca)
-	Last Updated: 2018-04-07
+	Last Updated: 2018-04-08
 
   Advisory:
   This website is a testing ground. Experimental and non-functional features may result.
@@ -22,6 +22,7 @@
     2018-04-06 - Updated links to .php files. Search results clickable, leads to individual restaurant page.
     2018-04-06 - Added PHP variables to be referenced by the search handler, variables set by button presses.
     2018-04-07 - Added a drop down option to select restaurant category, saves selection as variable.
+    2018-04-08 - Adjusted Layout, added automatic slideshow, added button to add restaurant.
 
   Planned:
     -Filters Accordian
@@ -41,11 +42,16 @@
     <!-- A meta viewport gives the browser instructions on how to control the page's dimensions and scaling. i.e. when viewed on different types of devices -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
 
   	<!-- This code points to a seperate CSS files which contains all the styling rules for the webpage aesthetics -->
     <link href="w3.css" rel="stylesheet">
     <link href="w3-theme-red.css" rel="stylesheet">
   </head>
+
+  <style>
+      .mySlides {display:none;}
+  </style>
 
 
   <body>
@@ -65,7 +71,7 @@
     <!-- NAVIGATION BAR -->
     <!-- The contents of the navigation bar under the Header -->
     <div class="w3-bar w3-card w3-theme-d3" style="height:100%">
-      <a href="index.php" class="w3-bar-item w3-button w3-padding-16 w3-theme-d1">Home</a>
+      <a href="index.php" class="w3-bar-item w3-button w3-padding-16 w3-theme-d1">Restaurants</a>
       <a href="top_rated.php" class="w3-bar-item w3-button w3-padding-16">Top Rated</a>
       <a href="raters.php" class="w3-bar-item w3-button w3-padding-16">Raters</a>
       <a href="restaurant.php" class="w3-bar-item w3-button w3-padding-16">Restaurant</a>
@@ -83,17 +89,17 @@
     </div>
    
 
-    <!-- STATIC BODY CONTENT-->
+    <!-- STATIC BODY CONTENT LEFT-->
     <!-- The main contents below the Navigation Bar which is always displayed on the page -->
-    <div class="w3-container">
+    <div class="w3-container w3-twothird" id="main">
 
       <!-- SEARCH BAR -->
       <!-- Here is the search form for user input, pressing the "search" button calls the php code within this same page (action="...$_SERVER["PHP_SELF"]);?>"). References in the PHP by the tag "searchText" -->
       <!-- htmlspecialchars is being used here for security to prevent SQL injections -->
       <form class="w3-container" method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <br>
-        <label class="w3-text-red"><b>Looking for something?</b></label>
-            <input class="w3-input w3-border w3-animate-input w3-hover-light-grey" name="searchText" type="text" style="width:30%" placeholder="connected to the PHP">
+        <label class="w3-text-red"><b>Looking for a restaurant?</b></label>
+            <input class="w3-input w3-border w3-animate-input w3-hover-light-grey" name="searchText" type="text" style="width:30%" placeholder="search query">
             <!-- Category options for the type of restaurant -->
             <select class="w3-select" name="category">
                 <option value="" disabled selected>Choose a category if you wish</option>
@@ -103,98 +109,99 @@
                 <option value="Japanese">Japanese</option>
                 <option value="Western">Western</option>
             </select>
+            <!-- Category options for the type of restaurant -->
+            <select class="w3-select" name="category2">
+                <option value="" disabled selected>Some other filter</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
             <button class="w3-button w3-hover-shadow w3-round w3-theme">Search</button>
       </form>
 
+      <!-- DYNAMIC CONTENT -->
+      <!-- The main contents below the Static Body Content which is generated dynamically, as a result of searchers and user input. Dynamic content should be generated using PHP and the results of SQL queries -->
 
-      <!-- SEARCH FILTERS -->
-      <!-- An accordion which displays optional filters that can be applied to the search. -->
-      <!--
-      <br>
-      <button onclick="myFunction('filters')" class="w3-btn w3-block w3-theme w3-left-align">Filters Options</button>
-      <div id="filters" class="w3-container w3-hide">
+          <!-- RESULTS LIST -->
+          <!-- The results of searching the database will be displayed here -->
+          <br>
+          <label class="w3-text-red"><b>Search results that match your query:</b></label>
+          <?php 
+            #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
+
+            #As the code of the seperate file is 'included' with this page any code/variables declared here will be combined with the code of the seperate php file. Variables to do not need to be passed explicitely.
+            $callingPage = "index";
+            $callingButton = $callingTab = $callingCategory = "";
+
+            #Change the variable depending on what button was lasted pressed
+            if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_1])){
+              $callingButton = "test_button_1";
+            }
+            if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_2])){
+              $callingButton = "test_button_2";
+            }
+
+            #Set the variables when an input is received
+            if($_SERVER['REQUEST_METHOD'] == "GET"){
+              $callingCategory = "";
+              $callingCategory = test_input($_GET[category]);
+            }
+
+            #Cleans up the value before using as variable
+            function test_input($data){
+              $data = trim($data);
+              $data = stripslashes($data);
+              $data = htmlspecialchars($data);
+              return $data;
+            }
+
+            #In this way we can recylce the search handler.
+            include 'handle_search.php';
+          ?>
+
+    </div>
+
+
+
+    <!-- STATIC BODY CONTENT RIGHT-->
+    <!-- The main contents below the Navigation Bar which is always displayed on the page -->
+    <div class="w3-container w3-third">
+
+        <div class="w3-content w3-section" style="max-width:500px">
+            <img class="slideshow_restaurant_generic" src="images/rest_generic_001.png" style="width:100%">
+            <img class="slideshow_restaurant_generic" src="images/rest_generic_002.png" style="width:100%">
+            <img class="slideshow_restaurant_generic" src="images/rest_generic_003.png" style="width:100%">
+            <img class="slideshow_restaurant_generic" src="images/rest_generic_004.png" style="width:100%">
+            <img class="slideshow_restaurant_generic" src="images/rest_generic_005.png" style="width:100%">
+        </div>
+
+        <br>
+        <button class="w3-button w3-xlarge w3-circle w3-theme">+</button>
+        ADD a restaurant
+
+        <!-- TEST BUTTONS -->
+        <!-- Proof of concept, button presses change PHP variables to be used in the search handler switch case -->
+        <br>
+        <br>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="get">
-          <p>
-            <input class="w3-radio" type="radio" name="categoryTest" value="Chinese"><label> Chinese</label>
-          </p>
-          <p>
-            <input class="w3-radio" type="radio" name="categoryTest" value="Indian"><label> Indian</label>
-          </p>
-          <p>
-            <input class="w3-radio" type="radio" name="categoryTest" value="Italian"><label> Italian</label>
-          </p>
-          <p>
-            <input class="w3-radio" type="radio" name="categoryTest" value="Japanese"><label> Japanese</label>
-          </p>
-          <p>
-            <input class="w3-radio" type="radio" name="categoryTest" value="Western"><label> Western</label>
-          </p>
+            <button class="w3-button w3-hover-shadow w3-round w3-theme" name="test_button_1" value="test_button_1">Button_1</button>
+            <button class="w3-button w3-hover-shadow w3-round w3-theme" name="test_button_2" value="test_button_2">Button_2</button>
         </form>
-      </div>
-      <br>
-      -->
-
-
-      <!-- TEST BUTTONS -->
-      <!-- Proof of concept, button presses change PHP variables to be used in the search handler switch case -->
-      <br>
-      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="get">
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name="test_button_1" value="test_button_1">Button_1</button>
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name="test_button_2" value="test_button_2">Button_2</button>
-      </form>
-
+        <br>
     </div>
 
   
-    <!-- DYNAMIC CONTENT -->
-    <!-- The main contents below the Static Body Content which is generated dynamically, as a result of searchers and user input. Dynamic content should be generated using PHP and the results of SQL queries -->
-    <div class="w3-row w3-container" id="main">   
-
-      <!-- RESULTS LIST -->
-      <!-- The results of searching the database will be displayed here -->
-      <label class="w3-text-red"><b>Search results that match your query:</b></label>
-      <?php 
-        #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
-
-        #As the code of the seperate file is 'included' with this page any code/variables declared here will be combined with the code of the seperate php file. Variables to do not need to be passed explicitely.
-        $callingPage = "index";
-        $callingButton = $callingTab = $callingCategory = "";
-
-        #Change the variable depending on what button was lasted pressed
-        if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_1])){
-          $callingButton = "test_button_1";
-        }
-        if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_2])){
-          $callingButton = "test_button_2";
-        }
-
-        #Set the variables when an input is received
-        if($_SERVER['REQUEST_METHOD'] == "GET"){
-          $callingCategory = "";
-          $callingCategory = test_input($_GET[category]);
-        }
-
-        #Cleans up the value before using as variable
-        function test_input($data){
-          $data = trim($data);
-          $data = stripslashes($data);
-          $data = htmlspecialchars($data);
-          return $data;
-        }
-
-        #In this way we can recylce the search handler.
-        include 'handle_search.php';
-      ?>
-
-    </div>
-
 
     <!-- FOOTER -->
     <!-- The contents of the footer at the bottom of the webpage -->
-    <footer class="w3-container w3-center w3-theme">
-      <h5>Copyright &copy; DeepCan.com</h5>
-      <p class="w3-opacity">Jonathan Calles (8906650) and Ahmed Haj Abdel Khaleq (8223727)</p>
-    </footer>
+    <div class="w3-row w3-container">  
+      <footer class="w3-container w3-center w3-theme">
+        <h5>Copyright &copy; DeepCan.com</h5>
+        <p class="w3-opacity">Jonathan Calles (8906650) and Ahmed Haj Abdel Khaleq (8223727)</p>
+      </footer>
+    </div>
 
 
     <!-- SEARCH FILTERS ACCORDIAN -->
@@ -207,6 +214,25 @@
         } else {
             x.className = x.className.replace(" w3-show", "");
         }
+    }
+    </script>
+
+    <!-- AUTOMATIC SLIDESHOW -->
+    <!-- This javascript supports the automatic slideshow. -->
+    <!-- Reference: https://www.w3schools.com/w3css/w3css_slideshow.asp -->
+    <script>
+    var myIndex = 0;
+    carousel();
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("slideshow_restaurant_generic");
+        for (i = 0; i < x.length; i++) {
+           x[i].style.display = "none";  
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}    
+        x[myIndex-1].style.display = "block";  
+        setTimeout(carousel, 2000); // Change image every 2 seconds
     }
     </script>
 
