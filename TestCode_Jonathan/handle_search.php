@@ -34,10 +34,10 @@
 
 		//Create variables for connection information to connect to the database
 		//Edit these variables according to your local server environment
-		$port="XXXX";
-		$database="XXXX";
-		$username="XXXX";
-		$password="XXXX";
+		$port="5432";
+		$database="simulat5_deepcan_test";
+		$username="simulat5_jon";
+		$password="2132Yousri";
 		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
@@ -55,6 +55,7 @@
 		echo "<p>previous:  $callingTabPrevious</p>";
 		echo "<p>current: $callingTab</p>";
 		*/
+		
 		
 
 				//Keep the same tab open
@@ -146,6 +147,68 @@
 				}
 				break;
 
+
+			//QUERY C
+			case ($callingPage == "index" and $callingButton == "test_button_c"):
+				//create query statements that will be executed. 
+				//Can use PHP variables, but note the {} that need to go around the PHP variables
+				echo "<br><b>C: For each user‐specified category of restaurant, list the manager names together with the date that the locations have opened. The user should be able to select the category (e.g. Italian or Thai) from a list.</b>";
+				//type will be supplied by a list, but for now it is hardcoded to Western
+				$query = "SELECT name, managername, firstopendate, streetaddress 
+						  FROM restaurant r INNER JOIN location l on r.restaurantid = l.restaurantid
+						  WHERE type = 'Western'";
+
+			
+				//execute the query
+				$results = pg_query($databaseconnection, $query);
+				//RAW OUTPUT 1 - PRINT AS ARRAY
+				//For testing, and understanding of what is actually retrieved:
+				//convert the rows from the result into a 2D array, then print the array
+				$arr = pg_fetch_all($results);
+
+				//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
+				if(empty($arr)){
+					echo "<p><b> Error - No results matching your query </b></p>";
+					echo "<p><b> Note: the search is case sensitive (for now) </b></p>";
+				}
+			
+		
+				//dynamically generate an HTML formatted list by looping through results. 
+				//leverages the dimensions of $results as variables, picks out specific data points. In this example the menu item names and descriptions.
+				$num_rows = pg_numrows($results);
+				$num_cols = pg_numfields($results);
+				for ($i=0; $i<$num_rows; $i++){
+
+					// fetches and encodes the row so that it can be passed onto the restaurant page
+					$row = pg_fetch_row($results, $i);
+					$val_rest_name = $row[0];
+					$val_mgr_name = $row[1];
+					$val_open_date = $row[2];
+					$val_address = $row[3];
+
+					
+					echo "<p>
+						<li class='w3-bar' style = 'list-style-type:none'>
+						
+				          	<span onclick='this.parentElement.style.display='none
+				          	class='w3-bar-item w3-button w3-xlarge w3-right'>&times;</span>
+
+				          	<img src='images/test-logo.png' class='w3-bar-item w3 circle' style='width:85px'>
+				          	<div class='w3-bar-item'>
+				             	<span class='w3-large'>$val_rest_name</span>
+				             	<br>
+				              	<span>$val_mgr_name</span>
+				              	<br>
+					            <span>$val_open_date</span>
+					            <br>
+					            <span>$val_address</span>
+		          		   	</div>
+		          			</a>
+		      			</li>
+		      		</p>";
+					}
+					break;
+					
 
 			//QUERY E
 			case ($callingPage == "indexRight" and $callingButton == ""):

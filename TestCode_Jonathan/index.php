@@ -178,11 +178,8 @@
             $callingButton = $callingTab = $callingCategory = "";
 
             #Change the variable depending on what button was lasted pressed
-            if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_1])){
-              $callingButton = "test_button_1";
-            }
-            if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_2])){
-              $callingButton = "test_button_2";
+            if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_c])){
+              $callingButton = "test_button_c";
             }
 
             #Set the variables when an input is received
@@ -267,13 +264,11 @@
               </div>
 
 
-        <!-- TEST BUTTONS -->
-        <!-- Proof of concept, button presses change PHP variables to be used in the search handler switch case -->
+        <!-- QUERY C BUTTON -->
         <br>
         <br>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="get">
-            <button class="w3-button w3-hover-shadow w3-round w3-theme" name="test_button_1" value="test_button_1">Button_1</button>
-            <button class="w3-button w3-hover-shadow w3-round w3-theme" name="test_button_2" value="test_button_2">Button_2</button>
+            <button class="w3-button w3-hover-shadow w3-round w3-theme" name="test_button_c" value="test_button_1">(C)</button>
         </form>
         <br>
 
@@ -299,7 +294,7 @@
           <!-- AVERAGE PRICES BAR GRAPH -->
           <div id="top_in_category" class="w3-container w3-border tab">
 
-              <h2>E</h2>
+              <h2>(E)</h2>
               <?php 
                 #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
                 #In this way we can recylce the search handler.
