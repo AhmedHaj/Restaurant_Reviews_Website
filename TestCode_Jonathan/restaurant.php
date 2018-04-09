@@ -42,7 +42,7 @@
 
   <body>
 
-    <!-- HEADER -->
+    <!-- HHEADER -->
     <header class="w3-display-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
         <a href="index.php">
           <img src="images/test-logo.png" style="width:42px;height:42px;border:0;">
@@ -104,8 +104,49 @@
 
           <br>
           <br>
-          <img onclick="document.getElementById('add_item_rating').style.display='block'" class="w3-btn w3-circle" src="images/submit-icon-1.png" style="width:85px">
+          <img onclick="document.getElementById('add_menu_item').style.display='block'" class="w3-btn w3-circle" src="images/submit-icon-1.png" style="width:85px">
           Add a new MenuItem
+
+          <!-- ADD NEW MENU ITEM POP-UP-->
+          <!-- The contents of the 'add new menue item' pop-up -->
+          <div id="add_menu_item" class="w3-modal">
+            <div class="w3-modal-content w3-card-4">
+
+                <!-- Header for the pop-up -->
+                <header class="w3-container w3-theme-d1">
+                    <!-- Button to close the pop -->
+                    <span onclick="document.getElementById('add_menu_item').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <h2>
+                      <img src="images/submit-icon-1.png" alt="Icon for submissions" style="width: 55px; height: 55px;">
+                      Add Menu Item
+                    </h2>
+                </header>
+
+                <!-- Main contents for the pop-up -->
+                <!-- Form for user to enter new data with required fields -->
+                <div class="w3-container">
+                  <form class="w3-container" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+
+                    <div class="w3-section">
+                      <label><b>Item Name</b></label>
+                      <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_name" type="text" placeholder="Some Edible Food" required>
+                      <label><b>Type</b></label>
+                      <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_type" type="text" placeholder="food / feverage" required>
+                      <label><b>Category</b></label>
+                      <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="starter / main / Ddessert" required>
+                      <label><b>Price</b></label>
+                      <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="Some descriptive information" required>
+                    </div>
+
+                    <!-- Button to submit new data -->
+                    <button class="w3-button w3-hover-shadow w3-round w3-theme" type="submit" name="submit_add_menu_item" value="submit_add_menu_item">Submit Menu Item</button>
+
+                  </form>
+                  <br>
+
+                </div>
+            </div>
+          </div>
 
       </div>
 
@@ -120,11 +161,11 @@
             include 'restaurant_ratings.php';
           ?>
 
-          <!-- The button which toggles the pop-up to add a location -->
           <br>
           <br>
           <img onclick="document.getElementById('add_location').style.display='block'" class="w3-btn w3-circle" src="images/submit-icon-1.png" style="width:85px">
           Add a new Location
+
 
           <!-- ADD NEW LOCATION POP-UP-->
           <!-- The contents of the 'add new location' pop-up -->
@@ -132,7 +173,7 @@
           <div id="add_location" class="w3-modal">
             <div class="w3-modal-content w3-card-4">
 
-                <!-- Header for the 'add restaurant' pop-up -->
+                <!-- Header for the pop-up -->
                 <header class="w3-container w3-theme-d1">
                     <!-- Button to close the pop -->
                     <span onclick="document.getElementById('add_location').style.display='none'" class="w3-button w3-display-topright">&times;</span>
@@ -142,8 +183,8 @@
                     </h2>
                 </header>
 
-                <!-- Main contents for the 'add restaurant' pop-up -->
-                <!-- Form for user to enter new restaurant data with required fields -->
+                <!-- Main contents for the pop-up -->
+                <!-- Form for user to enter new data with required fields -->
                 <div class="w3-container">
                   <form class="w3-container" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 
@@ -167,8 +208,8 @@
                       <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="21:00" required>
                     </div>
 
-                    <!-- Button to submit new location data -->
-                    <button class="w3-button w3-hover-shadow w3-round w3-theme" type="submit" name="submit_add_restaurant" value="submit_add_restaurant">Submit Location</button>
+                    <!-- Button to submit new data -->
+                    <button class="w3-button w3-hover-shadow w3-round w3-theme" type="submit" name="submit_add_location" value="submit_add_location">Submit Location</button>
 
                   </form>
                   <br>
@@ -177,9 +218,10 @@
             </div>
           </div>
 
+
       </div>
 
-      <!-- Favorite Raters Tab -->
+      <!-- FAVOURITE RATERS TAB -->
       <div id="FavoriteRaters" class="w3-container w3-border tab" style="display:none">
         <?php 
 
@@ -192,7 +234,7 @@
 
     </div>
 
-    <!-- Tab Selection -->
+    <!-- TAB SELECTION SCRIPT -->
     <script>
     function openTab(evt, tabName) {
       var i, x, tablinks;
@@ -212,7 +254,6 @@
   
 
     <!-- SUBMIT A REVIEW SECTION (RIGHT HAND SIDE OF PAGE) -->
-    
     <div class="w3-container w3-third" id="AddReview">
 
       <h2><img src="images/review-icon-1.png" style="width:25%"> Review this Restaurant</h2>
@@ -288,7 +329,7 @@
     
 
 
-      <!-- Submit A Review Execution -->
+      <!-- SUBMIT A REVIEW EXECUTION -->
       <?php 
         #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
 
@@ -308,7 +349,7 @@
 
       ?>
 
-      <!-- Submit An Item Review Execution -->
+      <!-- SUBMIT AN ITEM EXECUTION -->
       <?php 
         #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
 
@@ -328,7 +369,7 @@
 
       ?>
 
-      <!-- Delete A Review Execution -->
+      <!-- DELETE A REVIEW EXECUTION -->
       <?php 
         #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
 
@@ -349,7 +390,7 @@
 
       ?>
 
-      <!-- Delete A Menu Item Review Execution -->
+      <!-- DELETE A MENU ITEM REVIEW EXECUTION -->
       <?php 
         #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
 
@@ -375,7 +416,7 @@
 
 
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <div class="w3-row w3-container"> 
       <footer class="w3-container w3-center w3-theme">
         <h5>Copyright &copy; DeepCan.com</h5>
