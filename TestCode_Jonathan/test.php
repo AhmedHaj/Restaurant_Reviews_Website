@@ -403,7 +403,7 @@
 			 								AND
 											r3.restaurantid = restaurantid
 											AND m.itemid != itemid)
-						AND r3.restaurantid = 'R1'";
+						AND r3.restaurantid = 'R01'";
 
 			
 				//execute the query
@@ -590,7 +590,7 @@
 				              	<br>
 					            <span>E-mal: $val_rater_email</span>
 					            <br>
-					            <span>$val_rest_name</span>
+					            <span>$val_res_name</span>
 					            <br>
 					            <span>Price: $val_price</span>
 					            <br>

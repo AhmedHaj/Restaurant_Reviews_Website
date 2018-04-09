@@ -21,6 +21,7 @@
 		$username="XXXX";
 		$password="XXXX";
 		
+		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
 	
@@ -236,12 +237,12 @@
 
 									$ratinghtmlcode = $ratinghtmlcode."<li class='w3-bar' >
 										
-								          	<form method='post' action='" . htmlspecialchars($_SERVER["PHP_SELF"]). '?'. http_build_query($_GET) . "'> 
-								          		<input type='text' style='display:none' name='submit_delete_rating_id' value=$ratingRow[0]> 
-								          		<input type='text' style='display:none' name='submit_delete_rating_date' value=$ratingRow[2]>
-								          		<input type='text' style='display:none' name='submit_delete_rating_item' value=$ratingRow[5]>
-								          		<button class='w3-bar-item w3-button w3-xlarge w3-right' value = 'submit_delete_item_rating name = 'submit_delete_item_rating' type = 'submit'>&times;</button>
-								          	</form>
+							          	<form method='post' action='" . htmlspecialchars($_SERVER["PHP_SELF"]). '?'. http_build_query($_GET) . "'> 
+							          		<input type='text' style='display:none' name='submit_delete_item_rating_id' value=$ratingRow[0]> 
+							          		<input type='text' style='display:none' name='submit_delete_item_rating_date' value=$ratingRow[2]>
+							          		<input type='text' style='display:none' name='submit_delete_item_rating_item' value=$ratingRow[5]>
+							          		<button class='w3-bar-item w3-button w3-xlarge w3-right' name = submit_delete_item_rating type = 'submit'>&times;</button>
+							          	</form>
 
 								          	<img src='images/rater-004.png' class='w3-bar-item w3 circle' style='width:85px'>
 								          	<div class='w3-bar-item'>

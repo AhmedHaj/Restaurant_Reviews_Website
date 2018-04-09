@@ -24,6 +24,7 @@
 		$username="XXXX";
 		$password="XXXX";
 		
+		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
 		
@@ -169,9 +170,10 @@
 			case ($callingPage == "restaurant" and $callingButton == "submit_delete_item_rating"):
 				
 				//Create a shorthand for the data in the insert form, i.e. a variable we can use.
-				$input1 = $_REQUEST["submit_delete_rating_id"];
-				$input2 = $_REQUEST["submit_delete_rating_date"];
-				$Input3 = $_REQUEST["submit_delete_rating_item"];
+				$input1 = $_REQUEST['submit_delete_item_rating_id'];
+				$input2 = $_REQUEST['submit_delete_item_rating_date'];
+				$Input3 = $_REQUEST['submit_delete_item_rating_item'];
+
 			
 
 				//Manually escape apostrophes in the string
@@ -180,21 +182,19 @@
 				
 
 				
-				//Display the submitted information using the created variables inside an echo command
-				echo "	<p>You entered: $input1</p>
-						<p>You entered: $input2</p>";
 
 				//saves the input as an escaped string. Strings need to be sanitized before being used in an SQL query for safety, to escape non-compatible characters, take into account the current charset of the connection, and for security (e.g. SQL injections). SQL queries may not work if not using an escaped string variable.
 				//http://php.net/manual/en/function.pg-escape-string.php
 				$val_rater_id = pg_escape_string($input1);
-				$val_item_id = pg_escape_string($input3);
 				$val_date = $input2;
+				$val_item_id = pg_escape_string($input3);
+				
 				
 				
 	
 				//create insert statements that will be executed. 
 				//Can use PHP variables, but note the {} that need to go around the PHP variables
-				$query = "DELETE FROM ratingitem 
+				$query = "DELETE FROM ratingItem 
 						  WHERE userid = '{$val_rater_id}'
 						  	AND
 						  		date = '{$val_date}'
@@ -211,12 +211,13 @@
 
 			
 
-			case ($callingPage == "restaurant" and $callingButton == "submit_add_rating_item"):
+			case ($callingPage == "restaurant" and $callingButton == "submit_add_item_rating"):
 
 				//Create a shorthand for the data in the insert form, i.e. a variable we can use.
 				$input1 = $_REQUEST["submit_add_rating_item_rating"];
 				$input2 = $_REQUEST["submit_add_rating_item_comment"];
 				$input3 = $_REQUEST["submit_add_rating_item_name"];
+
 				
 
 				//Manually escape apostrophes in the string

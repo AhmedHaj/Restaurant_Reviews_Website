@@ -349,7 +349,7 @@
 
       ?>
 
-      <!-- SUBMIT AN ITEM EXECUTION -->
+      <!-- SUBMIT AN ITEM Review EXECUTION -->
       <?php 
         #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
 
@@ -401,6 +401,8 @@
         #Change the variable depending on what button was lasted pressed
         if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[submit_delete_item_rating])){
           $callingButton = "submit_delete_item_rating";
+
+
 
         }
 

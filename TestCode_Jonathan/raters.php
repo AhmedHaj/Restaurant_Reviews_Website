@@ -87,15 +87,10 @@
       <h3> This page probably doesn't need search filters</h3>
 
       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="get">
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_B>Query_B</button>
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_C>Query_C</button>
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_D>Query_D</button>
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_E>Query_E</button>
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_K>Query_K</button>
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_L>Query_L</button>
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_M>Query_M</button>
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_N>Query_N</button>
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_O>Query_O</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_K>Highest Food and Mood Raters(K)</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_L>Highest Food or Mood Raters(L)</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_N>Lower than Rater R (N)</button>
+          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=Query_O>Moody Raters(O)</button>
       </form>
 
     </div>
