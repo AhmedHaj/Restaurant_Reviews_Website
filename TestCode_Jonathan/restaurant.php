@@ -58,7 +58,7 @@
         <div class="w3-row">
           <h1 class="w3-center"> <?php 
                                   echo $dataset[1];
-                                  ?>
+                                  ?> (A)
                                   </h1>
           <h5 class="w3-center"><?php
                                  echo "<a href='$dataset[3]'>$dataset[3]</a>";
@@ -75,9 +75,9 @@
     <div class="w3-bar w3-padding w3-card w3-twothird">
       <div class="w3-container w3-theme-d3">
         <button class="w3-bar-item w3-button tablink w3-red w3-hover-red" onclick="openTab(event,'Reviews')">Reviews</button>
-        <button class="w3-bar-item w3-button tablink w3-hover-red" onclick="openTab(event,'Menu')">Menu</button>
-        <button class="w3-bar-item w3-button tablink w3-hover-red" onclick="openTab(event,'Locations')">Locations</button>
-        <button class="w3-bar-item w3-button tablink w3-hover-red" onclick="openTab(event,'FavoriteRaters')">Favorite Raters</button>
+        <button class="w3-bar-item w3-button tablink w3-hover-red" onclick="openTab(event,'Menu')">Menu(B)</button>
+        <button class="w3-bar-item w3-button tablink w3-hover-red" onclick="openTab(event,'Locations')">Locations(D)</button>
+        <button class="w3-bar-item w3-button tablink w3-hover-red" onclick="openTab(event,'FavoriteRaters')">Favorite Raters(M)</button>
       </div>
 
 
