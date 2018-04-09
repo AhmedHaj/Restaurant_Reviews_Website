@@ -29,11 +29,6 @@
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
 		
 		//Code and Variables from the referencing page are incorporated with this code by inclusion and can be referenced directly
-		echo "<p>The page which called this PHP code is:  $callingPage</p>";
-		echo "<p>The tab which called this PHP code is:  $callingTab</p>";
-		echo "<p>The button which called this PHP code is:  $callingButton</p>";
-		echo "<p>The filter which called this PHP code is:  $callingFilter</p>";
-		echo "<p>The category which called this PHP code is:  $callingCategory</p>";
 
 		//Perform different SQL insertions depending on the context
 		switch (true) {
@@ -95,12 +90,7 @@
 				//Manually escape apostrophes in the string
 				$input5 = str_replace("'","''", $input5);
 				
-				//Display the submitted information using the created variables inside an echo command
-				echo "	<p>You entered: $input1</p>
-						<p>You entered: $input2</p>
-						<p>You entered: $input3</p>
-						<p>You entered: $input4</p>
-						<p>You entered: $input5</p>";
+				
 				//saves the input as an escaped string. Strings need to be sanitized before being used in an SQL query for safety, to escape non-compatible characters, take into account the current charset of the connection, and for security (e.g. SQL injections). SQL queries may not work if not using an escaped string variable.
 				//http://php.net/manual/en/function.pg-escape-string.php
 				$comment = pg_escape_string($input5);

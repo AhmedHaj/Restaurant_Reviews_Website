@@ -53,8 +53,8 @@
 
 						//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
 						if(empty($arr)){
-							echo "<p><b> Error - No results matching your query </b></p>";
-							echo "<p><b> Note: the search is case sensitive (for now) </b></p>";
+							echo "Be the first to review this restaurant!";
+							
 						}
 					
 				
@@ -191,8 +191,8 @@
 
 						//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
 						if(empty($arr)){
-							echo "<p><b> Error - No results matching your query </b></p>";
-							echo "<p><b> Note: the search is case sensitive (for now) </b></p>";
+							echo "Oops! It appears this restaurant has not yet added their menu!";
+							
 						}
 					
 				
@@ -356,8 +356,8 @@
 
 						//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
 						if(empty($arr)){
-							echo "<p><b> Error - No results matching your query </b></p>";
-							echo "<p><b> Note: the search is case sensitive (for now) </b></p>";
+							echo "Oops! It appears this restaurant has not yet added where they are located!";
+							
 						}
 					
 				
@@ -430,8 +430,8 @@
 
 						//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
 						if(empty($arr)){
-							echo "<p><b> Error - No results matching your query </b></p>";
-							echo "<p><b> Note: the search is case sensitive (for now) </b></p>";
+							echo "It appears as though this restaurant has no Favorite Raters :(";
+							
 						}
 					
 				

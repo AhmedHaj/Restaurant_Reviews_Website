@@ -2,9 +2,9 @@
 	//Create variables for connection information to connect to the database
 	//Edit these variables according to your local server environment
 	$port="XXXX";
-	$database="XXXX";
-	$username="XXXX";
-	$password="XXXX";
+		$database="XXXX";
+		$username="XXXX";
+		$password="XXXX";
 	
 	//open a connection to the Postgre database on the slocal server, using the connection information
 	$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
@@ -484,8 +484,8 @@
 
 				//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
 				if(empty($arr)){
-					echo "<p><b> Error - No results matching your query </b></p>";
-					echo "<p><b> Note: the search is case sensitive (for now) </b></p>";
+					echo "No one gave a rating lower than Celina Lee. Wow she is mean.";
+					
 				}
 			
 		
@@ -553,8 +553,8 @@
 
 				//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
 				if(empty($arr)){
-					echo "<p><b> Error - No results matching your query </b></p>";
-					echo "<p><b> Note: the search is case sensitive (for now) </b></p>";
+					echo "There are no Moody Raters, perhaps that is a good thing.";
+
 				}
 			
 		

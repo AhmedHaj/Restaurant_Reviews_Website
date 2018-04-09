@@ -277,15 +277,7 @@
         <br>
         <br>
         <img onclick="document.getElementById('add_item_rating').style.display='block'" class="w3-btn w3-circle" src="images/submit-icon-1.png" style="width:25%">
-        Add a Menu Item !
-        <br>
-        <br>
-        <img onclick="document.getElementById('add_item_rating').style.display='block'" class="w3-btn w3-circle" src="images/review-icon-1.png" style="width:25%">
-        Leave a rating!
-        <br>
-        <br>
-        <img onclick="document.getElementById('add_item_rating').style.display='block'" class="w3-btn w3-circle" src="images/review-icon-2.png" style="width:25%">
-        Leave a review!
+        Add a Menu Item!
 
               <!-- ADD NEW RESTAURANT POP-UP-->
               <!-- The contents of the 'add new restaurant' pop-up -->
