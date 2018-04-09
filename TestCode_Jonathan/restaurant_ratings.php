@@ -7,7 +7,8 @@
   Advisory:
   This website is a testing ground. Experimental and non-functional features may result.
 	Development History:
-	    2018-03-31 - linked to SQL
+	    2018-03-31 - Linked to SQL
+	    2018-04-08 - Integrated restaurant-related Queries
 
 
 -->
@@ -15,10 +16,10 @@
 		<?php #this php code receives the search term as input from the user, searches the database, and generates the results.
 		//Create variables for connection information to connect to the database
 		//Edit these variables according to your local server environment
-		$port="XXXX";
-		$database="XXXX";
-		$username="XXXX";
-		$password="XXXX";
+		$port="5430";
+		$database="postgres";
+		$username="postgres";
+		$password="P9WGNNFTp4ssw0rd";
 		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
@@ -86,7 +87,7 @@
 
 								$food_rating = $food_rating."\n<img src='images/star.png' style='width:15px'>";
 							}
-							//currently food, mood. and staff are broken due to errors in converting to sql
+							
 							$mood_rating = "";
 							for($k=0; $k<$row[4]; $k++){
 
@@ -101,43 +102,83 @@
 
 							
 							$val_description = $row[6];
-							echo "<p>
-								<li class='w3-bar' style = 'list-style-type:none'>
-								
-						          	<span onclick='this.parentElement.style.display='none
-						          	class='w3-bar-item w3-button w3-xlarge w3-right'>&times;</span>
+							if($row[0] == "RA02"){
 
-						          	<img src='images/rater-004.png' class='w3-bar-item w3 circle' style='width:85px'>
-						          	<div class='w3-bar-item'>
-						             	<span class='w3-large'>$rater_name</span>
-						             	<br>
-						             	<span>price: </span>
-						              	$price_rating
-						              	<br>
-						              	<span>food: </span>
-						              	$row[3]
-						              	<br>
-						              	<span>mood: </span>
-						              	$row[4]
-						              	<br>
-						              	<span>staff: </span>
-						              	$row[5]
-						              	<br>
-						              	<span>$val_description</span>
-						              	<br>
-							            <h6>$row[1]</h6>
-				          		   	</div>
-				          			</a>
-				      			</li>
-				      		</p>";
+								
+							
+								echo "<p>
+									<li class='w3-bar' style = 'list-style-type:none'>
+										<form method='post' action='" . htmlspecialchars($_SERVER["PHP_SELF"]). '?'. http_build_query($_GET) . "'> 
+							          		<input type='text' style='display:none' name='submit_delete_rating_id' value=$row[0]> 
+							          		<input type='text' style='display:none' name='submit_delete_rating_date' value=$row[1]>
+							          		<button class='w3-bar-item w3-button w3-xlarge w3-right' name = 'submit_delete_rating' type = 'submit'>&times;</button>
+							          	</form>
+
+							          	<img src='images/rater-004.png' class='w3-bar-item w3 circle' style='width:85px'>
+							          	<div class='w3-bar-item'>
+							             	<span class='w3-large'>$rater_name</span>
+							             	<br>
+							             	<span>price: </span>
+							              	$price_rating
+							              	<br>
+							              	<span>food: </span>
+							              	$food_rating
+							              	<br>
+							              	<span>mood: </span>
+							              	$mood_rating
+							              	<br>
+							              	<span>staff: </span>
+							              	$staff_rating
+							              	<br>
+							              	<span>$val_description</span>
+							              	<br>
+								            <h6>$row[1]</h6>
+					          		   	</div>
+					          			</a>
+					      			</li>
+					      		</p>";
+							} else {
+
+								echo "<form><p>
+									<li class='w3-bar' style = 'list-style-type:none'>
+									
+							          	<img src='images/rater-004.png' class='w3-bar-item w3 circle' style='width:85px'>
+							          	<div class='w3-bar-item'>
+							             	<span class='w3-large'>$rater_name</span>
+							             	<br>
+							             	<span>price: </span>
+							              	$price_rating
+							              	<br>
+							              	<span>food: </span>
+							              	$food_rating
+							              	<br>
+							              	<span>mood: </span>
+							              	$mood_rating
+							              	<br>
+							              	<span>staff: </span>
+							              	$staff_rating
+							              	<br>
+							              	<span>$val_description</span>
+							              	<br>
+								            <h6>$row[1]</h6>
+					          		   	</div>
+					          			</a>
+					      			</li>
+					      		</p>
+					      		</form>";
+
 							}
+						}
 							break;
 
 				case($CallingTab == "Menu"):
 
 					//create query statements that will be executed. 
 					//Can use PHP variables, but note the {} that need to go around the PHP variables
-					$query = "SELECT * FROM menuItem M WHERE M.restaurantID = '{$escapedinput}'";
+					$query = "SELECT itemid, name, description, price, category 
+							  FROM menuitem 
+							  WHERE restaurantid = '{$escapedinput}' 
+							  ORDER BY category DESC" ;
 
 				
 					//execute the query
@@ -167,7 +208,9 @@
 							$row = pg_fetch_row($results, $i);
 							$itemID = $row[0];
 							$item_name = $row[1];
-							$item_description = $row[4];
+							$item_description = $row[2];
+							$item_price = $row[3];
+							$item_category = $row[4];
 
 
 							//second query to retrieve the ratings for each menu item
@@ -215,16 +258,12 @@
 								
 						          	<span onclick=$function
 						          	class='w3-bar-item w3-button w3-xlarge w3-right'>&times;</span>
-
 						          	<img src='images/rater-004.png' class='w3-bar-item w3 circle' style='width:85px'>
 						          	<div class='w3-bar-item'>
-						             	<span class='w3-large'>$item_name</span>
-						              	<img src='images/star.png' style='width:15px'>
-						              	<img src='images/star.png' style='width:15px'>
-						              	<img src='images/star.png' style='width:15px'>
-						              	<img src='images/star.png' style='width:15px'>
+						             	<span class='w3-large'>$item_name $$item_price</span>
 						              	<br>
-						              	<span>$item_description</span> 
+						              	<span>$item_description</span>
+						              	<br>$item_category</span> 
 						              	<div id = 'ratings' class='w3-container w3-show'>
 						              		<ul style = 'list-style-type:none'>
 						              			$ratinghtmlcode 
@@ -240,7 +279,9 @@
 
 					//create query statements that will be executed. 
 					//Can use PHP variables, but note the {} that need to go around the PHP variables
-					$query = "SELECT * FROM rating M WHERE M.restaurantID = '{$escapedinput}'";
+					$query = " SELECT m.name,m.price, managername, phonenumber, streetaddress, houropen, hourclose
+					  FROM restaurant r INNER JOIN location l on r.restaurantid = l.restaurantid INNER JOIN menuitem m on m.restaurantID = r.restaurantID
+					  WHERE r.restaurantid ='{$escapedinput}' AND m.price IN (SELECT MAX(price) FROM menuitem WHERE restaurantid = m.restaurantID) ";
 
 				
 					//execute the query
@@ -262,46 +303,17 @@
 						$num_rows = pg_numrows($results);
 						$num_cols = pg_numfields($results);
 						for ($i=0; $i<$num_rows; $i++){
-
-							// fetches and encodes the row so that it can be passed onto the restaurant page
 							$row = pg_fetch_row($results, $i);
-							$val_name = $row[0];
-
-							//second query to retrieve the name of the rater
-							$escapedinput2 = pg_escape_string($val_name);
-							$rater_query = "SELECT * FROM rater R WHERE R.userID = '{$escapedinput2}'";
-							$rater_result = pg_query($databaseconnection, $rater_query);
-							$rater = pg_fetch_array($rater_result, 0, PGSQL_NUM);
-							$rater_name = $rater[2];
-
-							//for loop to produce html code that represents the price rating as stars
-							$price_rating = "";
-							for($k=0; $k<$row[2]; $k++){
-
-								$price_rating = $price_rating."\n<img src='images/star.png' style='width:15px'>";
-							}
-
-
-							$food_rating = "";
-							for($k=0; $k<$row[3]; $k++){
-
-								$food_rating = $food_rating."\n<img src='images/star.png' style='width:15px'>";
-							}
-							//currently food, mood. and staff are broken due to errors in converting to sql
-							$mood_rating = "";
-							for($k=0; $k<$row[4]; $k++){
-
-								$mood_rating = $mood_rating."\n<img src='images/star.png' style='width:15px'>";
-							}
-
-							$staff_rating = "";
-							for($k=0; $k<$row[5]; $k++){
-
-								$staff_rating = $staff_rating."\n<img src='images/star.png' style='width:15px'>";
-							}
+							$val_item_name= $row[0];
+							$val_item_price= $row[1];
+							$val_mgr_name = $row[2];
+							$val_phone_num = $row[3];
+							$val_address = $row[4];
+							$val_open_hour = $row[5];
+							$val_close_hour = $row[6];
 
 							
-							$val_description = $row[6];
+							
 							echo "<p>
 								<li class='w3-bar' style = 'list-style-type:none'>
 								
@@ -310,23 +322,15 @@
 
 						          	<img src='images/rater-004.png' class='w3-bar-item w3 circle' style='width:85px'>
 						          	<div class='w3-bar-item'>
-						             	<span class='w3-large'>$rater_name</span>
+						             	<span class='w3-large'>$val_address</span> 
 						             	<br>
-						             	<span>price: </span>
-						              	$price_rating
-						              	<br>
-						              	<span>food: </span>
-						              	$row[3]
-						              	<br>
-						              	<span>mood: </span>
-						              	$row[4]
-						              	<br>
-						              	<span>staff: </span>
-						              	$row[5]
-						              	<br>
-						              	<span>$val_description</span>
-						              	<br>
-							            <h6>$row[1]</h6>
+						             	<span>$val_open_hour - $val_close_hour</span>
+						             	<br>
+						             	<span>Most Expensive item: $val_item_name $$val_item_price</span>
+						             	<br>
+						             	<span>Manager: $val_mgr_name</span>
+						             	<br>
+						             	<span>Phone: $val_phone_num</span>						              							          
 				          		   	</div>
 				          			</a>
 				      			</li>

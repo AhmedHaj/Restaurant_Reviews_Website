@@ -28,6 +28,12 @@
   $dataset = $_GET['dataset'];
   $encoded_row = urldecode($_GET['dataset']);
   $dataset = json_decode($encoded_row);
+  $encoded_dataset = json_encode($dataset);
+  $encoded_dataset2 = urlencode($encoded_dataset);
+
+
+  //setting date
+  $date = date('Y-m-d');
   ?>
 
 <body>
@@ -35,7 +41,7 @@
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
   <a href="index.php">
-  <img src="images/test-logo.png" alt="HTML tutorial" style="width:42px;height:42px;border:0;">
+  <img src="images/test-logo.png" style="width:42px;height:42px;border:0;">
 </a>
 </header>
 
@@ -44,17 +50,17 @@
 
   <!-- About Section -->
   <div class="w3-row w3-padding-64" id="about">
-    <div class="w3-col m6 w3-padding-large w3-hide-small">
-     <img src="images/test-logo.png" class="w3-round w3-image w3-opacity-min" alt="Table Setting" width="600" height="750">
+    <div class="w3-center">
+     <img src="images/test-logo.png" class="w3-round w3-image w3-opacity-min"  width="320" height="400">
     </div>
-    <div class="w3-col m6 w3-padding-large">
+    <div class="w3-row">
       <h1 class="w3-center"> <?php 
-                              echo $dataset[1] 
+                              echo $dataset[1];
                               ?>
                               </h1><br>
-      <h5 class="w3-center">{Opening Date}</h5>
-      <p class="w3-large">The Catering was founded in blabla by Mr. Smith in lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute iruredolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.We only use <span class="w3-tag w3-light-grey">seasonal</span> ingredients.</p>
-      <p class="w3-large w3-text-grey w3-hide-medium">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <h5 class="w3-center"><?php
+                             echo "<a href='$dataset[3]'>$dataset[3]</a>";
+                             ?></h5>
     </div>
   </div>
   
@@ -132,20 +138,64 @@ function openTab(evt, tabName) {
   
   
 
-  <!-- Contact Section -->
-  <div class="w3-container w3-padding-64" id="contact">
-    <h1>Contact</h1><br>
-    <p>We offer full-service catering for any event, large or small. We understand your needs and we will cater the food to satisfy the biggerst criteria of them all, both look and taste. Do not hesitate to contact us.</p>
-    <p class="w3-text-blue-grey w3-large"><b>Catering Service, 42nd Living St, 43043 New York, NY</b></p>
-    <p>You can also contact us by phone 00553123-2323 or email catering@catering.com, or you can send us a message here:</p>
-    <form action="/action_page.php" target="_blank">
-      <p><input class="w3-input w3-padding-16" type="text" placeholder="Name" required name="Name"></p>
-      <p><input class="w3-input w3-padding-16" type="number" placeholder="How many people" required name="People"></p>
-      <p><input class="w3-input w3-padding-16" type="datetime-local" placeholder="Date and time" required name="date" value="2017-11-16T20:00"></p>
-      <p><input class="w3-input w3-padding-16" type="text" placeholder="Message \ Special requirements" required name="Message"></p>
-      <p><button class="w3-button w3-light-grey w3-section" type="submit">SEND MESSAGE</button></p>
+  <!-- Submit A Review Section -->
+  <div class="w3-container w3-padding-64" id="AddReview">
+    <h1>Submit A Review</h1><br>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]). '?'.http_build_query($_GET);?>" method="post">
+      <p><input class="w3-input w3-padding-16" type="number" placeholder="1-5 rating for the price" min = '1' max = '5' required name="submit_add_rating_price"></p>
+      <p><input class="w3-input w3-padding-16" type="number" placeholder="1-5 rating for the food" min = '1' max = '5' required name="submit_add_rating_food"></p>
+      <p><input class="w3-input w3-padding-16" type="number" placeholder="1-5 rating for the mood" min = '1' max = '5' required name="submit_add_rating_mood"></p>
+      <p><input class="w3-input w3-padding-16" type="number" placeholder="1-5 rating for the staff" min = '1' max = '5' required name="submit_add_rating_staff"></p>
+      <input  type="text"  style="display:none" value=<?php 
+                                        echo $dataset[0]
+                                        ?>  name= "submit_add_rating_res_id">
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Comment" required name="submit_add_rating_comment"></p>
+
+      <!-- Button to submit Review -->
+      <p><button class="w3-button w3-light-grey w3-section" type="submit" name= "submit_add_rating">SUBMIT REVIEW</button></p>
     </form>
   </div>
+
+  <!-- Submit A Review Execution -->
+  <?php 
+    #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
+
+    #As the code of the seperate file is 'included' with this page any code/variables declared here will be combined with the code of the seperate php file. Variables to do not need to be passed explicitely.
+    $callingPage = "restaurant";
+
+
+    #Change the variable depending on what button was lasted pressed
+    if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[submit_add_rating])){
+      $callingButton = "submit_add_rating";
+    }
+
+
+
+    #In this way we can recylce the search handler.
+    include 'handle_insertion.php';
+
+  ?>
+
+  <!-- Delete A Review Execution -->
+  <?php 
+    #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
+
+    #As the code of the seperate file is 'included' with this page any code/variables declared here will be combined with the code of the seperate php file. Variables to do not need to be passed explicitely.
+    $callingPage = "restaurant";
+
+
+    #Change the variable depending on what button was lasted pressed
+    if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[submit_delete_rating])){
+      $callingButton = "submit_delete_rating";
+
+    }
+
+
+
+    #In this way we can recylce the search handler.
+    include 'handle_insertion.php';
+
+  ?>
   
 <!-- End page content -->
 </div>
@@ -158,6 +208,7 @@ function openTab(evt, tabName) {
 
 <!-- SEARCH FILTERS ACCORDION -->
     <!-- This javascript supports the toggling of showing/hiding the accordion with the filter opens. By changing the text in the HTML to include or remove "w3-show" it hides or shows the accordion contents. -->
+    <!-- 
     <script>
     function myFunction(id){
         var x = document.getElementById(id);
@@ -168,6 +219,7 @@ function openTab(evt, tabName) {
         }
     }
     </script>
+  -->
 
 </body>
 </html>

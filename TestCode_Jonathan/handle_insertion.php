@@ -81,12 +81,90 @@
 
 				break;
 
-			case (false):
-				#code
-				break;
+			case ($callingPage == "restaurant" and $callingButton == "submit_add_rating"):
 
-			case (false):
-				#code
+				//Create a shorthand for the data in the insert form, i.e. a variable we can use.
+				$input1 = $_REQUEST["submit_add_rating_price"];
+				$input2 = $_REQUEST["submit_add_rating_food"];
+				$input3 = $_REQUEST["submit_add_rating_mood"];
+				$input4 = $_REQUEST["submit_add_rating_staff"];
+				$input5 = $_REQUEST["submit_add_rating_comment"];
+				$input6 = $_REQUEST["submit_add_rating_res_id"];
+
+				//Manually escape apostrophes in the string
+				$input5 = str_replace("'","''", $input5);
+				
+				//Display the submitted information using the created variables inside an echo command
+				echo "	<p>You entered: $input1</p>
+						<p>You entered: $input2</p>
+						<p>You entered: $input3</p>
+						<p>You entered: $input4</p>
+						<p>You entered: $input5</p>";
+				//saves the input as an escaped string. Strings need to be sanitized before being used in an SQL query for safety, to escape non-compatible characters, take into account the current charset of the connection, and for security (e.g. SQL injections). SQL queries may not work if not using an escaped string variable.
+				//http://php.net/manual/en/function.pg-escape-string.php
+				$comment = pg_escape_string($input5);
+				$val_res_id = $input6;
+				
+				/*
+				//Retrieving the userid
+				$query = "SELECT MAX(restaurantid) FROM restaurant";
+				$results = pg_query($databaseconnection, $query);
+				$row = pg_fetch_row($results, 0);
+				$value_cut = substr($row[0], 1);
+				$val_next_id_num = $value_cut+1;
+					echo"<p>Row to insert: $val_next_id_num</p>";
+
+				Hardcoding the account for demo purpose
+				*/
+				$val_next_id_num = 'RA02';
+				//create insert statements that will be executed. 
+				//Can use PHP variables, but note the {} that need to go around the PHP variables
+				$query = "INSERT INTO rating(UserID,Date,price,food,mood,staff,comments,restaurantID) VALUES ('{$val_next_id_num}','{$date}',$input1,$input2, $input3,$input4, '{$comment}', '{$val_res_id}');";
+
+				//execute insertion
+				pg_query($databaseconnection, $query);
+
+				echo "<meta http-equiv='refresh' content='0'>";
+
+				break;
+				
+
+			case ($callingPage == "restaurant" and $callingButton == "submit_delete_rating"):
+				
+				//Create a shorthand for the data in the insert form, i.e. a variable we can use.
+				$input1 = $_REQUEST["submit_delete_rating_id"];
+				$input2 = $_REQUEST["submit_delete_rating_date"];
+			
+
+				//Manually escape apostrophes in the string
+				$input1 = str_replace("'","''", $input1);
+				
+
+				
+				//Display the submitted information using the created variables inside an echo command
+				echo "	<p>You entered: $input1</p>
+						<p>You entered: $input2</p>";
+
+				//saves the input as an escaped string. Strings need to be sanitized before being used in an SQL query for safety, to escape non-compatible characters, take into account the current charset of the connection, and for security (e.g. SQL injections). SQL queries may not work if not using an escaped string variable.
+				//http://php.net/manual/en/function.pg-escape-string.php
+				$val_rater_id = pg_escape_string($input1);
+				$val_date = $input2;
+				
+				
+	
+				//create insert statements that will be executed. 
+				//Can use PHP variables, but note the {} that need to go around the PHP variables
+				$query = "DELETE FROM rating  
+						  WHERE userid = '{$val_rater_id}'
+						  	AND
+						  		date = '{$val_date}';";
+				echo "$val_date";
+
+				//execute insertion
+				pg_query($databaseconnection, $query);
+
+				echo "<meta http-equiv='refresh' content='0'>";
+
 				break;
 
 			case (false):
@@ -111,14 +189,18 @@
 
 		//convert the rows from the result into a 2D array
 		//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
+		/*
 		$arr = pg_fetch_all($results);
 		if(empty($arr)){
 			echo "<p><b> Error - No results matching your query </b></p>";
 			echo "<p><b> Note: the search is case sensitive (for now) </b></p>";
 		}
+		*/
 
 			
 		//close the database connection 
 		pg_close($databaseconnection);
+
+
 		
 		?>
