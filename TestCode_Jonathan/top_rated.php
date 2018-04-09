@@ -2,18 +2,20 @@
 	This code supports the website  DeepCan.com
   
   Author: Jonathan Calles 8906650 (jcall057@uottawa.ca) and Ahmed Haj Abdel Khaleq 8223727 (ahaja032@uottawa.ca)
-	Last Updated: 2018-04-08
+	   Last Updated: 2018-04-09
 
   Advisory:
-  This website is a testing ground. Experimental and non-functional features may result.
+      This website's development is ongoing. Experimental and non-functional features may result.
 
 	Development History:
 		2018-04-06 - Webpage code initiated, templated from index.php
     2018-04-08 - Adjusted layout, added inner tabs, added buttons to add ratings/reviews.
+    2018-04-08 - Added log in/out button, toggles a pop-up with further profile options.
+    2018-04-09 - Inner tabs display different content relate to diferrent rankings.
 
 
   Planned:
-    -Provide platform for SQL queries related to top rated restaurants and food items
+    - Incorporate requirement queries in a meaningful way to the UI.
 
 -->
 
@@ -42,11 +44,45 @@
     <!-- The contents at the header of the webpage -->
     <header class="w3-container w3-padding" id="mainHeader">
 
-        <div class="w3-btn w3-display-topright w3-padding" style="width:150px">
-              LOG OUT/IN
-              <img src="images/rater-001.png" style="width:35px">
-        </div>
+        <!-- LOG IN/OUT POP-UP -->
+        <!-- A pop up interface with options to log out/in, and change profile settings -->
 
+              <!-- The button which toggles the pop-up -->
+              <button onclick="document.getElementById('profile_login').style.display='block'" class="w3-button w3-display-topright w3-padding" style="width:150px" >
+                    LOG OUT/IN
+                    <img src="images/rater-001.png" style="width:35px">
+              </button>
+
+              <!-- The contents of the log out/in pop-up -->
+              <div id="profile_login" class="w3-modal">
+                <div class="w3-modal-content w3-card-4">
+
+                    <!-- Header for the log out/in pop-up -->
+                    <header class="w3-container w3-theme-d1">
+                        <!-- Button to close the pop -->
+                        <span onclick="document.getElementById('profile_login').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                        <h2>Your Profile</h2>
+                    </header>
+
+                    <!-- Main contents of the log out/in pop-up -->
+                    <div class="w3-container">
+                      <br>
+                      <img src="images/rater-001.png" style="width:80px">
+                      <p> You are currently logged in as: <b>William</b></p>
+
+                      <!-- Button to log out -->
+                      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="get">
+                        <button class="w3-button w3-hover-shadow w3-round w3-theme" name="log_out" value="log_out">Log Out</button>
+                      </form>
+                      <br>
+                    </div>
+
+
+                </div>
+              </div>
+
+
+        <!-- Website name and logo as a main centre piece -->
         <div class="w3-center">
           <h1>Deep Can</h1>
               <img src="images/test-logo.png" alt="Test logo for Image loading" style="width: 120px; height: 120px;">
@@ -87,62 +123,114 @@
       <!-- INNER NAVIGATION TAB -->
       <div class="w3-bar w3-padding w3-card">
         <div class="w3-container w3-theme-d3">
-          <button class="w3-bar-item w3-button tablink w3-theme" onclick="openTab(event,'best_overall')">Best Overall</button>
-          <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'most_reviewed')">Most Reviewed</button>
-          <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'top_in_category')">Top in Category</button>
+          <button class="w3-bar-item w3-button tablink w3-theme" onclick="openTab(event,'top_in_category')">Top in Category (J)</button>
+          <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'best_overall')">Best Overall</button>
+          <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'most_reviewed')">Most Reviewed (F)</button>
         </div>
 
 
-        <!-- Reviews Tab -->
-        <div id="best_overall" class="w3-container w3-border tab">
+        <!-- CONTROL OF INNER NAVIGATION TAB -->
+        <script>
+        function openTab(evt, tabName) {
+          var i, x, tablinks;
+          x = document.getElementsByClassName("tab");
+          for (i = 0; i < x.length; i++) {
+              x[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablink");
+          for (i = 0; i < x.length; i++) {
+              tablinks[i].className = tablinks[i].className.replace(" w3-theme", "");
+          }
+          document.getElementById(tabName).style.display = "block";
+          evt.currentTarget.className += " w3-theme";
+        }
+        </script>
+
+
+        <!-- TOP IN CATEGORY TAB -->
+        <div id="top_in_category" class="w3-container w3-border tab">
+
+            <form class="w3-container" method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <select class="w3-select" name="category">
+                    <option value="" disabled selected>Choose a category</option>
+                    <option value="best_in_price">Best in Price</option>
+                    <option value="best_in_food">Best in Food</option>
+                    <option value="best_in_mood">Best in Mood</option>
+                    <option value="best_in_staff">Best in Staff</option>
+                </select>
+                <button class="w3-button w3-hover-shadow w3-round w3-theme">Find Out!</button>
+            </form>
+
+            <?php 
+              #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
+              #In this way we can recylce the search handler.
+              $callingPage = "top_rated";
+              $callingTab = "top_in_category";
+              $callingButton = "x";
+
+              #Set the variables when an input is 
+              if($_SERVER['REQUEST_METHOD'] == "GET"){
+                $callingCategory = "";
+                $callingCategory = test_input($_GET[category]);
+              }
+
+              #Cleans up the value before using as variable
+              function test_input($data){
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
+              }
+
+              include 'handle_search.php';
+              
+            ?>
+        </div>
+
+
+
+        <!-- BEST OVERALL TAB -->
+        <div id="best_overall" class="w3-container w3-border tab" style="display:none">
+          some text
          <?php 
               #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
+              $callingPage = "top_rated";
+              $callingTab = "best_overall";
+              $callingButton = "x";
+
               #In this way we can recylce the search handler.
               include 'handle_search.php';
           ?>
         </div>
 
 
-        <!-- Menu Tab -->
+        <!-- MOST REVIEWED TAB -->
         <div id="most_reviewed" class="w3-container w3-border tab" style="display:none">
           <?php 
               #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
               #In this way we can recylce the search handler.
+              $callingPage = "top_rated";
+              $callingTab = "most_reviewed";
+              $callingButton = "x";
               include 'handle_search.php';
           ?>
         </div>
 
-
-        <!-- Contact Tab -->
-        <div id="top_in_category" class="w3-container w3-border tab" style="display:none">
-            <br>
-            <div class="w3-theme-l4">
-                <div class="w3-theme" style="height:24px; width:25%"></div>
-            </div>
-            <br>
-            <div class="w3-theme-l4">
-                <div class="w3-theme" style="height:24px; width:45%"></div>
-            </div>
-            <br>
-            <div class="w3-theme-l4">
-                <div class="w3-theme" style="height:24px; width:85%"></div>
-            </div>
-            <br>
-        </div>
-
       </div>
 
-      <p>This page could potentially query and display the top rated things by categories</p> <!--TEMP COMMENT -->
+
+
+
       <h2>The following queries comply with the requirements under <u>Ratings of Restuarants</u></h2> <!--TEMP COMMENT -->
-      <!-- TEST BUTTONS -->
+      <!-- TEMP BUTTONS -->
       <!-- Proof of concept, button presses change PHP variables to be used in the search handler switch case -->
       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="get">
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=test_button_f>F</button>
           <button class="w3-button w3-hover-shadow w3-round w3-theme" name=test_button_g>G</button>
           <button class="w3-button w3-hover-shadow w3-round w3-theme" name=test_button_h>H</button>
           <button class="w3-button w3-hover-shadow w3-round w3-theme" name=test_button_i>I</button>
-          <button class="w3-button w3-hover-shadow w3-round w3-theme" name=test_button_j>J</button>
       </form>
+
+
 
       <!-- DYNAMIC CONTENT -->
       <!-- The main contents below the Static Body Content which is generated dynamically, as a result of searchers and user input. Dynamic content should be generated using PHP and the results of SQL queries -->
@@ -158,9 +246,6 @@
             $callingPage = "top_rated";
 
             #Change the variable depending on what button was lasted pressed
-            if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_f])){
-              $callingButton = "test_button_f";
-            }
             if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_g])){
               $callingButton = "test_button_g";
             }
@@ -169,9 +254,6 @@
             }
             if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_i])){
               $callingButton = "test_button_i";
-            }
-            if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_j])){
-              $callingButton = "test_button_j";
             }
 
             #In this way we can recylce the search handler.
@@ -202,8 +284,12 @@
         ADD a rating
         <br>
         <br>
-        <img class="w3-center w3-btn" src="images/review-icon-1.png" style="width:25%">
+        <img class="w3-center w3-btn w3-circle" src="images/review-icon-1.png" style="width:25%">
         ADD a rating
+        <br>
+        <br>
+        <img class="w3-center w3-btn w3-circle" src="images/review-icon-2.png" style="width:25%">
+        WRITE a review
 
         <!-- TEST BUTTONS -->
         <!-- Proof of concept, button presses change PHP variables to be used in the search handler switch case -->
@@ -226,25 +312,6 @@
         <p class="w3-opacity">Jonathan Calles (8906650) and Ahmed Haj Abdel Khaleq (8223727)</p>
       </footer>
     </div>
-
-
-
-    <!-- INNER NAVIGATION TAB -->
-    <script>
-    function openTab(evt, tabName) {
-      var i, x, tablinks;
-      x = document.getElementsByClassName("tab");
-      for (i = 0; i < x.length; i++) {
-          x[i].style.display = "none";
-      }
-      tablinks = document.getElementsByClassName("tablink");
-      for (i = 0; i < x.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" w3-theme", "");
-      }
-      document.getElementById(tabName).style.display = "block";
-      evt.currentTarget.className += " w3-theme";
-    }
-    </script>
 
 
   </body>
