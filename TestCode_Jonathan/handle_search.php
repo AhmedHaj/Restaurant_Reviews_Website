@@ -34,10 +34,10 @@
 
 		//Create variables for connection information to connect to the database
 		//Edit these variables according to your local server environment
-		$port="5432";
-		$database="simulat5_deepcan_test";
-		$username="simulat5_jon";
-		$password="2132Yousri";
+		$port="XXXX";
+		$database="XXXX";
+		$username="XXXX";
+		$password="XXXX";
 		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
@@ -409,7 +409,7 @@
 							LEFT JOIN rating RA ON RE.restaurantID = RA.restaurantID
 							LEFT JOIN rater R ON RA.userID = R.userID
 							GROUP BY RE.name, Re.restaurantID
-							ORDER BY RE.name";
+							ORDER BY COUNT(RE.name) DESC";
 
 				//No variables needed for this query
 				//Second query finds all the ratings related info for each restaurant
@@ -419,7 +419,7 @@
 							LEFT JOIN rating RA ON RE.restaurantID = RA.restaurantID
 							LEFT JOIN rater R ON RA.userID = R.userID
 							GROUP BY RE.name, Re.restaurantID, R.name, RA.price, RA.food, RA.mood, RA.staff
-							ORDER BY RE.name";
+							ORDER BY COUNT(RE.name) DESC";
 
 				$results = pg_query($databaseconnection, $query);
 				$results2 = pg_query($databaseconnection, $query2);
