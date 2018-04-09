@@ -16,10 +16,10 @@
 		<?php #this php code receives the search term as input from the user, searches the database, and generates the results.
 		//Create variables for connection information to connect to the database
 		//Edit these variables according to your local server environment
-		$port="5430";
-		$database="postgres";
-		$username="postgres";
-		$password="P9WGNNFTp4ssw0rd";
+		$port="XXXX";
+		$database="XXXX";
+		$username="XXXX";
+		$password="XXXX";
 		
 		//open a connection to the Postgre database on the slocal server, using the connection information
 		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
@@ -215,7 +215,7 @@
 
 							//second query to retrieve the ratings for each menu item
 							$escapedinput2 = pg_escape_string($itemID);
-							$ratingItem_query = "SELECT R1.name, R2.date, R2.rating, R2.comment
+							$ratingItem_query = "SELECT R1.userid, R1.name, R2.date, R2.rating, R2.comment, R2.itemid
 												FROM rater R1, ratingItem R2
 												WHERE R1.userID = R2.userID AND R2.itemID = '{$escapedinput2}'";
 
@@ -227,30 +227,54 @@
 								
 								//for loop to produce html code that represents the rating as stars
 								$star_rating = "";
-								for($k=0; $k<$ratingRow[2]; $k++){
+								for($k=0; $k<$ratingRow[3]; $k++){
 
 									$star_rating = $star_rating."\n<img src='images/star.png' style='width:15px'>";
 								}
+								if($ratingRow[0] == 'RA02'){
 
-								$ratinghtmlcode = $ratinghtmlcode."<li class='w3-bar' >
+									$ratinghtmlcode = $ratinghtmlcode."<li class='w3-bar' >
+										
+								          	<form method='post' action='" . htmlspecialchars($_SERVER["PHP_SELF"]). '?'. http_build_query($_GET) . "'> 
+								          		<input type='text' style='display:none' name='submit_delete_rating_id' value=$ratingRow[0]> 
+								          		<input type='text' style='display:none' name='submit_delete_rating_date' value=$ratingRow[2]>
+								          		<input type='text' style='display:none' name='submit_delete_rating_item' value=$ratingRow[5]>
+								          		<button class='w3-bar-item w3-button w3-xlarge w3-right' value = 'submit_delete_item_rating name = 'submit_delete_item_rating' type = 'submit'>&times;</button>
+								          	</form>
+
+								          	<img src='images/rater-004.png' class='w3-bar-item w3 circle' style='width:85px'>
+								          	<div class='w3-bar-item'>
+								             	<span class='w3-large'>$ratingRow[1] $star_rating</span>
+								             	<br>
+								             	<span>$ratingRow[4]</span>
+								              	<br>
+								              	<h6>$ratingRow[2]</h6>
+						          		   	</div>
+						          			</a>
+						      			</li>";
+
+								} else {
+
+									$ratinghtmlcode = $ratinghtmlcode."<li class='w3-bar' >
 									
-							          	<span onclick='this.parentElement.style.display='none
-							          	class='w3-bar-item w3-button w3-xlarge w3-right'>&times;</span>
-
 							          	<img src='images/rater-004.png' class='w3-bar-item w3 circle' style='width:85px'>
-							          	<div class='w3-bar-item'>
-							             	<span class='w3-large'>$ratingRow[0] $star_rating</span>
-							             	<br>
-							             	<span>$ratingRow[3]</span>
-							              	<br>
-							              	<h6>$ratingRow[1]</h6>
-					          		   	</div>
-					          			</a>
-					      			</li>";
+								          	<div class='w3-bar-item'>
+								             	<span class='w3-large'>$ratingRow[1] $star_rating</span>
+								             	<br>
+								             	<span>$ratingRow[4]</span>
+								              	<br>
+								              	<h6>$ratingRow[2]</h6>
+						          		   	</div>
+						          			</a>
+						      			</li>";
+
+								}
+
+									
 
 							}
 
-							$function = "myFunction('ratings')";
+							
 
 							
 							echo "<p>
@@ -340,10 +364,84 @@
 
 					break;
 
+
+				case($CallingTab == "FavoriteRaters"):
+
+					//create query statements that will be executed. 
+				//Can use PHP variables, but note the {} that need to go around the PHP variables
+				//Requirement: 'Find the names and reputations of the raters that rated a specific restaurant (say Restaurant Z) the most frequently. Display this information together with their comments and the names and prices of the menu items they discuss. (Here Restaurant Z refers to a restaurant of your own choice, e.g. Ma Cuisine).'
+				//Query works by checking to see if the user has rated more than one item on the menu, currently, the restaurantid has been hardcoded to R1 
+				$query = "SELECT r1.name, r1.reputation, r2.comment, r3.name, m.name, m.price
+						  FROM rater r1 INNER JOIN ratingitem r2 ON r1.userid = r2.userid INNER JOIN menuitem m ON r2.itemid = m.itemid INNER JOIN restaurant r3 on r3.restaurantid = m.restaurantid 
+						  WHERE EXISTS(SELECT * 
+			 			  			   FROM ratingitem NATURAL JOIN menuitem
+			 						   WHERE r1.userid = userid
+			 								AND
+											r3.restaurantid = restaurantid
+											AND m.itemid != itemid)
+						AND r3.restaurantid = '{$dataset[0]}'";
+
+			
+						//execute the query
+						$results = pg_query($databaseconnection, $query);
+						//RAW OUTPUT 1 - PRINT AS ARRAY
+						//For testing, and understanding of what is actually retrieved:
+						//convert the rows from the result into a 2D array, then print the array
+						$arr = pg_fetch_all($results);
+
+						//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
+						if(empty($arr)){
+							echo "<p><b> Error - No results matching your query </b></p>";
+							echo "<p><b> Note: the search is case sensitive (for now) </b></p>";
+						}
+					
+				
+						//dynamically generate an HTML formatted list by looping through results. 
+						//leverages the dimensions of $results as variables, picks out specific data points. In this example the menu item names and descriptions.
+						$num_rows = pg_numrows($results);
+						$num_cols = pg_numfields($results);
+						for ($i=0; $i<$num_rows; $i++){
+
+							// fetches and encodes the row so that it can be passed onto the restaurant page
+							$row = pg_fetch_row($results, $i);
+							$val_rater_name = $row[0];
+							$val_rep = $row[1];
+							$val_res_com = $row[2];
+							$val_res_name = $row[3];
+							$val_item_name = $row[4];
+							$val_item_price = $row[5];
+
+							
+							echo "<p>
+								<li class='w3-bar' style = 'list-style-type:none'>
+								
+						          	<span onclick='this.parentElement.style.display='none
+						          	class='w3-bar-item w3-button w3-xlarge w3-right'>&times;</span>
+
+						          	<img src='images/rater-004.png' class='w3-bar-item w3 circle' style='width:85px'>
+						          	<div class='w3-bar-item'>
+						             	<span class='w3-large'>$val_rater_name</span>
+						             	<br>
+						              	<span>Reputation: $val_rep</span>
+						              	<br>
+							            <span>Rated $val_item_name, $$val_item_price</span>
+							            <br>
+							            <span>$val_res_com</span>
+							            <br>
+							            <span>$val_res_name</span>
+				          		   	</div>
+				          			</a>
+				      			</li>
+				      		</p>";
+							}
+							break;
+
+					break;
+
 				//default case:
 				default:
 
-					break;
+				break;
 			}
 			//close the database connection 
 			pg_close($databaseconnection);
