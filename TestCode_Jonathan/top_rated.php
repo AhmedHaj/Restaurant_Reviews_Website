@@ -237,13 +237,14 @@
 
           <!-- RESULTS LIST -->
           <!-- The results of searching the database will be displayed here -->
-          <label class="w3-text-red"><b>Search results that match your query:</b></label>
+          <label class="w3-text-green"><b>Search results that match your query:</b></label>
 
           <?php 
             #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
 
             #As the code of the seperate file is 'included' with this page any code/variables declared here will be combined with the code of the seperate php file. Variables to do not need to be passed explicitely.
             $callingPage = "top_rated";
+            $callingButton = "test_button_g";
 
             #Change the variable depending on what button was lasted pressed
             if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET[test_button_g])){
@@ -278,18 +279,7 @@
         <br>
         <button class="w3-button w3-xlarge w3-circle w3-theme">+</button>
         ADD a rating
-        <br>
-        <br>
-        <button class="w3-button w3-xlarge w3-circle w3-theme">+</button>
-        ADD a rating
-        <br>
-        <br>
-        <img class="w3-center w3-btn w3-circle" src="images/review-icon-1.png" style="width:25%">
-        ADD a rating
-        <br>
-        <br>
-        <img class="w3-center w3-btn w3-circle" src="images/review-icon-2.png" style="width:25%">
-        WRITE a review
+        
 
         <!-- TEST BUTTONS -->
         <!-- Proof of concept, button presses change PHP variables to be used in the search handler switch case -->
