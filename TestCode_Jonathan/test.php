@@ -1,3 +1,23 @@
+<!-- 
+	This code supports the website  DeepCan.com 
+	This php code is based on handle_search.php, as it stands, will retrieve query results for the Raters page based on the button that is pressed.
+  
+	Author: Jonathan Calles 8906650 (jcall057@uottawa.ca) and Ahmed Haj Abdel Khaleq 8223727 (ahaja032@uottawa.ca)
+		Last Updated: 2018-04-09
+
+  	Advisory:
+  		This website is a testing ground. Experimental and non-functional features may result.
+	
+	Development History:
+	    2018-04-08 - Code initiated, Added Queries K - O as buttons.
+
+  	Planned:
+    	- Set-up the different cases, with all the different SQL inserts to meet the requirements.
+-->
+
+
+
+
 <?php #this php code receives the search term as input from the user, searches the database, and generates the results.
 	//Create variables for connection information to connect to the database
 	//Edit these variables according to your local server environment

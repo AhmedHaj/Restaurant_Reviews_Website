@@ -10,6 +10,7 @@
 	
 	Development History:
 	    2018-04-08 - Code initiated
+	    2018-04-09 - Added the ability to add/delete Ratings, Add Restaurants, and Add Menu Item Ratings.
 
   	Planned:
     	- Set-up the different cases, with all the different SQL inserts to meet the requirements.
