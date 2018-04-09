@@ -381,7 +381,7 @@
 						          	<span onclick='this.parentElement.style.display='none
 						          	class='w3-bar-item w3-button w3-xlarge w3-right'>&times;</span>
 
-						          	<img src='images/rater-004.png' class='w3-bar-item w3 circle' style='width:85px'>
+						          	<img src='images/location-icon-1.png' class='w3-bar-item w3 circle' style='width:85px'>
 						          	<div class='w3-bar-item'>
 						             	<span class='w3-large'>$val_address</span> 
 						             	<br>
