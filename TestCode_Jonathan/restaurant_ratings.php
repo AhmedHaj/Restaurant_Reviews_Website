@@ -175,7 +175,7 @@
 
 					//create query statements that will be executed. 
 					//Can use PHP variables, but note the {} that need to go around the PHP variables
-					$query = "SELECT itemid, name, description, price, category 
+					$query = "SELECT itemid, name, description, price, category, type
 							  FROM menuitem 
 							  WHERE restaurantid = '{$escapedinput}' 
 							  ORDER BY category DESC" ;
@@ -211,6 +211,7 @@
 							$item_description = $row[2];
 							$item_price = $row[3];
 							$item_category = $row[4];
+							$item_type = $row[5];
 
 
 							//second query to retrieve the ratings for each menu item
@@ -274,15 +275,51 @@
 
 							}
 
-							
+							//change the icon to match the menuItem category
+							switch (true) {
+								case ($item_category == "starter"):
+									$menuItem_category_icon = "starter-icon-1.png";
+									break;
+									
+								case ($item_category == "main"):
+									$menuItem_category_icon = "main-icon-1.png";
+									break;
+
+								case ($item_category == "dessert"):
+									$menuItem_category_icon = "dessert-icon-1.png";
+									break;
+
+								default:
+									$menuItem_category_icon = "dessert-icon-1.png";
+									break;
+							}
+
+							//change the icon to match the menuItem type
+							switch (true) {
+								case ($item_type == "beverage"):
+									$menuItem_type_icon = "drink-icon-2.png";
+									break;
+
+								case ($item_type == "food"):
+									$menuItem_type_icon = "food-icon-2.png";
+									break;
+
+								default:
+									$menuItem_type_icon = "food-icon-2.png";
+									break;
+							}
+
 
 							
+
+							//outputs result of menuItem with ratings as a sub list
 							echo "<p>
 								<li  class='w3-bar' style = 'list-style-type:none' >
 								
 						          	<span onclick=$function
 						          	class='w3-bar-item w3-button w3-xlarge w3-right'>&times;</span>
-						          	<img src='images/rater-004.png' class='w3-bar-item w3 circle' style='width:85px'>
+						          	<img src='images/$menuItem_type_icon' class='w3-bar-item w3 circle' style='width:85px'>
+						          	<img src='images/$menuItem_category_icon' class='w3-bar-item w3 circle' style='width:85px'>
 						          	<div class='w3-bar-item'>
 						             	<span class='w3-large'>$item_name $$item_price</span>
 						              	<br>
