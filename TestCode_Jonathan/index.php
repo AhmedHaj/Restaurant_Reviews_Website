@@ -2,10 +2,10 @@
 	This code supports the website  DeepCan.com
   
   Author: Jonathan Calles 8906650 (jcall057@uottawa.ca) and Ahmed Haj Abdel Khaleq 8223727 (ahaja032@uottawa.ca)
-	Last Updated: 2018-04-08
+	     Last Updated: 2018-04-09
 
   Advisory:
-  This website is a testing ground. Experimental and non-functional features may result.
+      This website's development is ongoing. Experimental and non-functional features may result.
 
 	Development History:
 		2018-03-15 - Webpage code initiated.
@@ -25,11 +25,12 @@
     2018-04-08 - Adjusted Layout, added automatic slideshow, added button to add restaurant.
     2018-04-08 - Added log in/out button, toggles a pop-up with further profile options.
     2018-04-08 - Added pop-up with entry fields to add a new restaurant, inserts to database.
+    2018-04-09 - Added bar-graph of average prices, search category and sort filters enabled.
 
   Planned:
-    -Filters Accordian
-        -Have selected search filters applied to PHP SQL search query
-    -reviews and ratings page
+    - Add log-in and log-out functions
+    - Add the ability to create new login profiles
+    - Add sentiment analysis, text mining etc.
 
 -->
 
@@ -114,7 +115,7 @@
     <!-- NAVIGATION BAR -->
     <!-- The contents of the navigation bar under the Header -->
     <div class="w3-bar w3-card w3-theme-d3" style="height:100%">
-      <a href="index.php" class="w3-bar-item w3-button w3-padding-16 w3-theme-d1">Restaurants</a>
+      <a href="index.php" class="w3-bar-item w3-button w3-padding-16 w3-theme-d1">Home</a>
       <a href="top_rated.php" class="w3-bar-item w3-button w3-padding-16">Top Rated</a>
       <a href="raters.php" class="w3-bar-item w3-button w3-padding-16">Raters</a>
       <a href="restaurant.php" class="w3-bar-item w3-button w3-padding-16">Restaurant</a>
@@ -150,14 +151,14 @@
                 <option value="Indian">Indian</option>
                 <option value="Italian">Italian</option>
                 <option value="Japanese">Japanese</option>
+                <!--<option value="Mexican">Mexican</option>-->
                 <option value="Western">Western</option>
             </select>
             <!-- Category options for the type of restaurant -->
             <select class="w3-select" name="category2">
                 <option value="" disabled selected>Sorting options</option>
-                <option value="1">Sort alphabetically</option>
-                <option value="2">Sort by price</option>
-                <option value="3">Sort by best rated</option>
+                <option value="name">Sort alphabetically</option>
+                <option value="type">Sort by category</option>
             </select>
             <button class="w3-button w3-hover-shadow w3-round w3-theme">Search</button>
       </form>
@@ -188,6 +189,8 @@
             if($_SERVER['REQUEST_METHOD'] == "GET"){
               $callingCategory = "";
               $callingCategory = test_input($_GET[category]);
+              $callingCategory2 = "";
+              $callingCategory2 = test_input($_GET[category2]);
             }
 
             #Cleans up the value before using as variable
@@ -219,16 +222,15 @@
             <img class="slideshow_restaurant_generic" src="images/rest_generic_005.png" style="width:100%">
         </div>
 
-        <!-- Example button -->
-        <br>
-        <button class="w3-button w3-xlarge w3-circle w3-theme">+</button>
-        ADD a restaurant
-
         <!-- The button which toggles the pop-up to add a restaurant -->
-        <br>
-        <br>
         <img onclick="document.getElementById('add_restaurant').style.display='block'" class="w3-center w3-btn w3-circle" src="images/submit-icon-1.png" style="width:25%">
-        ADD a new restaurant
+        ADD a new Restaurant
+
+        <!-- The button which toggles the pop-up to add a location -->
+        <br>
+        <br>
+        <img onclick="document.getElementById('add_location').style.display='block'" class="w3-center w3-btn w3-circle" src="images/submit-icon-1.png" style="width:25%">
+        ADD a new Location
 
               <!-- ADD NEW RESTAURANT POP-UP-->
               <!-- The contents of the 'add new restaurant' pop-up -->
@@ -252,11 +254,11 @@
 
                         <div class="w3-section">
                           <label><b>Name</b></label>
-                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_name" type="text" placeholder="enter restaurant name" name="input_add_restaurant_name" required>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_name" type="text" placeholder="Enter restaurant name" required>
                           <label><b>Type</b></label>
-                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_type" type="text" placeholder="enter restaurant type" name="input_add_restaurant_type" required>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_type" type="text" placeholder="Western / Chinese / Indian ..." required>
                           <label><b>URL</b></label>
-                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="enter restaurant URL" name="input_add_restaurant_url" required>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="www.deepcan.com" required>
                         </div>
 
                         <!-- Button to submit new restaurant data -->
@@ -269,6 +271,57 @@
                 </div>
               </div>
 
+
+              <!-- ADD NEW LOCATION POP-UP-->
+              <!-- The contents of the 'add new location' pop-up -->
+              <!-- To be display after a new restaurant has been entered -->
+              <div id="add_location" class="w3-modal">
+                <div class="w3-modal-content w3-card-4">
+
+                    <!-- Header for the 'add restaurant' pop-up -->
+                    <header class="w3-container w3-theme-d1">
+                        <!-- Button to close the pop -->
+                        <span onclick="document.getElementById('add_location').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                        <h2>
+                          <img src="images/submit-icon-1.png" alt="Icon for submissions" style="width: 55px; height: 55px;">
+                          Add Location
+                        </h2>
+                    </header>
+
+                    <!-- Main contents for the 'add restaurant' pop-up -->
+                    <!-- Form for user to enter new restaurant data with required fields -->
+                    <div class="w3-container">
+                      <form class="w3-container" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+
+                        <div class="w3-section">
+                          <p>Restaurants aren't virtual... yet</p>
+                          <p>Please add a location for this restaurant</p>
+
+                          <p>Somehow we expect you to know a lot about this place</p>
+
+                          <label><b>First Open Date</b></label>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_name" type="text" placeholder="YYYY-MM-DD" required>
+                          <label><b>Manager Name</b></label>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_type" type="text" placeholder="First Last" required>
+                          <label><b>Phone Number</b></label>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="555-555-5555" required>
+                          <label><b>Street Address</b></label>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="1234 Something Stree, Ottawa, ON, A1B 2C3" required>
+                          <label><b>Opening Hour</b></label>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="09:00" required>
+                          <label><b>Closing Hour</b></label>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="21:00" required>
+                        </div>
+
+                        <!-- Button to submit new location data -->
+                        <button class="w3-button w3-hover-shadow w3-round w3-theme" type="submit" name="submit_add_restaurant" value="submit_add_restaurant">Submit Location</button>
+
+                      </form>
+                      <br>
+
+                    </div>
+                </div>
+              </div>
 
 
         <!-- TEST BUTTONS -->
@@ -298,6 +351,28 @@
             #In this way we can recylce the search handler.
             include 'handle_insertion.php';
           ?>
+
+
+          <!-- AVERAGE PRICES BAR GRAPH -->
+          <div id="top_in_category" class="w3-container w3-border tab">
+
+              <h2>E</h2>
+              <?php 
+                #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
+                #In this way we can recylce the search handler.
+                $callingPage = "indexRight";
+                $callingTab = "";
+                $callingButton = "";
+
+                #Set the variables when an input is 
+                if($_SERVER['REQUEST_METHOD'] == "GET"){
+                  $callingCategory = "";
+                  $callingCategory = test_input($_GET[category]);
+                }
+
+                include 'handle_search.php';
+              ?>
+          </div>
 
 
     </div>
