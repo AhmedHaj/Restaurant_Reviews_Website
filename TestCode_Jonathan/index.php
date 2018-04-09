@@ -23,6 +23,8 @@
     2018-04-06 - Added PHP variables to be referenced by the search handler, variables set by button presses.
     2018-04-07 - Added a drop down option to select restaurant category, saves selection as variable.
     2018-04-08 - Adjusted Layout, added automatic slideshow, added button to add restaurant.
+    2018-04-08 - Added log in/out button, toggles a pop-up with further profile options.
+    2018-04-08 - Added pop-up with entry fields to add a new restaurant.
 
   Planned:
     -Filters Accordian
@@ -60,14 +62,43 @@
     <!-- The contents at the header of the webpage -->
     <header class="w3-container w3-padding" id="mainHeader">
         
-        <div class="w3-btn w3-display-topright w3-padding" style="width:150px">
-              LOG OUT/IN
-              <img src="images/rater-001.png" style="width:35px">
-        </div>
+        <!-- LOG IN/OUT MODAL -->
+        <!-- A pop up interface with options to log out/in, and change profile settings -->
 
+              <!-- The button which toggles the pop-up -->
+              <button onclick="document.getElementById('profile_login').style.display='block'" class="w3-button w3-display-topright w3-padding" style="width:150px" >
+                    LOG OUT/IN
+                    <img src="images/rater-001.png" style="width:35px">
+              </button>
+
+              <!-- The contents of the pop-up -->
+              <div id="profile_login" class="w3-modal">
+                <div class="w3-modal-content w3-card-4">
+
+                    <header class="w3-container w3-theme-d1">
+                        <!-- Button to close the pop -->
+                        <span onclick="document.getElementById('profile_login').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                        <h2>Your Profile</h2>
+                    </header>
+
+                    <div class="w3-container">
+
+                      <br>
+                      <img src="images/rater-001.png" style="width:80px">
+                      <p> You are currently logged in as: <b>William</b></p>
+
+                      <!-- Button to log out -->
+                      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="get">
+                        <button class="w3-button w3-hover-shadow w3-round w3-theme" name="log_out" value="log_out">Log Out</button>
+                      </form>
+                      <br>
+
+                    </div>
+                </div>
+              </div>
+
+        <!-- Website name and logo as a main centre piece -->
         <div class="w3-center">
-          <!--<img class="w3-display-topright w3-padding" src="images/rater-001.png" style="width:6%">-->
-          
           <h1>Deep Can</h1>
               <img src="images/test-logo.png" alt="Test logo for Image loading" style="width: 120px; height: 120px;">
           <h2>Restaurant Reviews</h2>
@@ -122,12 +153,10 @@
             </select>
             <!-- Category options for the type of restaurant -->
             <select class="w3-select" name="category2">
-                <option value="" disabled selected>Some other filter</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+                <option value="" disabled selected>Sorting options</option>
+                <option value="1">Sort alphabetically</option>
+                <option value="2">Sort by price</option>
+                <option value="3">Sort by best rated</option>
             </select>
             <button class="w3-button w3-hover-shadow w3-round w3-theme">Search</button>
       </form>
@@ -180,6 +209,7 @@
     <!-- The main contents below the Navigation Bar which is always displayed on the page -->
     <div class="w3-container w3-third">
 
+        <!-- The images of the automatic slideshow -->
         <div class="w3-content w3-section" style="max-width:500px">
             <img class="slideshow_restaurant_generic" src="images/rest_generic_001.png" style="width:100%">
             <img class="slideshow_restaurant_generic" src="images/rest_generic_002.png" style="width:100%">
@@ -191,6 +221,46 @@
         <br>
         <button class="w3-button w3-xlarge w3-circle w3-theme">+</button>
         ADD a restaurant
+        <br>
+        <br>
+        <!-- The button which toggles the pop-up to add a restaurant -->
+        <img onclick="document.getElementById('add_restaurant').style.display='block'" class="w3-center w3-btn w3-circle" src="images/submit-icon-1.png" style="width:25%">
+        ADD a new restaurant
+
+              <!-- The contents of the add new restaurant pop-up -->
+              <div id="add_restaurant" class="w3-modal">
+                <div class="w3-modal-content w3-card-4">
+
+                    <header class="w3-container w3-theme-d1">
+                        <!-- Button to close the pop -->
+                        <span onclick="document.getElementById('add_restaurant').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                        <h2>
+                          <img src="images/submit-icon-1.png" alt="Icon for submissions" style="width: 55px; height: 55px;">
+                          Add Restaurant 
+                        </h2>
+                    </header>
+
+                    <div class="w3-container">
+                      <!-- Form for user to enter new restaurant data with required fields -->
+                      <form class="w3-container" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+                        <div class="w3-section">
+                          <label><b>Name</b></label>
+                          <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="enter restaurant name" name="input_add_restaurant_name" required>
+                          <label><b>Type</b></label>
+                          <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="enter restaurant type" name="input_add_restaurant_type" required>
+                          <label><b>URL</b></label>
+                          <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="enter restaurant URL" name="input_add_restaurant_url" required>
+                        </div>
+                        <!-- Button to lsubmit new restaurant data -->
+                        <button class="w3-button w3-hover-shadow w3-round w3-theme" type="submit" name="log_out" value="submit_add_restaurant">Submit Restaurant</button>
+                      </form>
+                      <br>
+
+                    </div>
+                </div>
+              </div>
+
+
 
         <!-- TEST BUTTONS -->
         <!-- Proof of concept, button presses change PHP variables to be used in the search handler switch case -->
