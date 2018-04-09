@@ -2,15 +2,19 @@
   This code supports the website  DeepCan.com
   
   Author: Jonathan Calles 8906650 (jcall057@uottawa.ca) and Ahmed Haj Abdel Khaleq 8223727 (ahaja032@uottawa.ca)
-  Last Updated: 2018-03-29
+    Last Updated: 2018-04-09
+
   Advisory:
-  This website is a testing ground. Experimental and non-functional features may result.
+      This website's development is ongoing. Experimental and non-functional features may result.
+
   Development History:
     2018-03-15 - Webpage code initiated.
     2018-03-20 - Webpage connected to main page.
     2018-03-30 - Retrieves array from previous page and incorporates information from the array into the page.
+    2018-04-09 - Adjusted layout, added icons, displays queries
+
   Planned:
-    - retreive reviews, ratings, and menu items based on the information received from previous page
+    - Create submission buttons to add ratings, locations, reviews etc.
 -->
 
 
@@ -38,14 +42,14 @@
 
   <body>
 
-    <!-- Header -->
+    <!-- HEADER -->
     <header class="w3-display-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
         <a href="index.php">
           <img src="images/test-logo.png" style="width:42px;height:42px;border:0;">
           Go Back <--
         </a>
 
-      <!-- About Section -->
+      <!-- ABOUT SECTION -->
       <div class="w3-row w3-padding" id="about">
         <div class="w3-center">
          <img src="images/restaurant-icon-2.png" class="w3-round w3-image w3-opacity-min"  style="width:15%">
@@ -67,7 +71,7 @@
  
 
 
-    <!-- Navbar -->
+    <!-- NAVIGATION BAR -->
     <div class="w3-bar w3-padding w3-card w3-twothird">
       <div class="w3-container w3-theme-d3">
         <button class="w3-bar-item w3-button tablink w3-red w3-hover-red" onclick="openTab(event,'Reviews')">Reviews</button>
@@ -77,7 +81,7 @@
       </div>
 
 
-      <!-- Reviews Tab -->
+      <!-- REVIEWS TAB -->
       <div id="Reviews" class="w3-container w3-border tab">
        <?php 
 
@@ -88,7 +92,7 @@
         ?>
       </div>
 
-      <!-- Menu Tab -->
+      <!-- MENU TAB -->
       <div id="Menu" class="w3-container w3-border tab" style="display:none">
         <?php 
 
@@ -98,18 +102,81 @@
           include 'restaurant_ratings.php';
           ?>
 
+          <br>
+          <br>
+          <img onclick="document.getElementById('add_item_rating').style.display='block'" class="w3-btn w3-circle" src="images/submit-icon-1.png" style="width:85px">
+          Add a new MenuItem
+
       </div>
 
 
-      <!-- Locations Tab -->
+      <!-- LOCATIONS TAB -->
       <div id="Locations" class="w3-container w3-border tab" style="display:none">
-        <?php 
+          <?php 
 
-          $CallingTab = "Locations";
+            $CallingTab = "Locations";
 
-          #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
-          include 'restaurant_ratings.php';
+            #the php code in this page points to a seperate php file that peforms that actual search of the SQL database. 
+            include 'restaurant_ratings.php';
           ?>
+
+          <!-- The button which toggles the pop-up to add a location -->
+          <br>
+          <br>
+          <img onclick="document.getElementById('add_location').style.display='block'" class="w3-btn w3-circle" src="images/submit-icon-1.png" style="width:85px">
+          Add a new Location
+
+          <!-- ADD NEW LOCATION POP-UP-->
+          <!-- The contents of the 'add new location' pop-up -->
+          <!-- To be display after a new restaurant has been entered -->
+          <div id="add_location" class="w3-modal">
+            <div class="w3-modal-content w3-card-4">
+
+                <!-- Header for the 'add restaurant' pop-up -->
+                <header class="w3-container w3-theme-d1">
+                    <!-- Button to close the pop -->
+                    <span onclick="document.getElementById('add_location').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <h2>
+                      <img src="images/submit-icon-1.png" alt="Icon for submissions" style="width: 55px; height: 55px;">
+                      Add Location
+                    </h2>
+                </header>
+
+                <!-- Main contents for the 'add restaurant' pop-up -->
+                <!-- Form for user to enter new restaurant data with required fields -->
+                <div class="w3-container">
+                  <form class="w3-container" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+
+                    <div class="w3-section">
+                      <p>Restaurants aren't virtual... yet</p>
+                      <p>Please add a location for this restaurant</p>
+
+                      <p>Somehow we expect you to know a lot about this place</p>
+
+                      <label><b>First Open Date</b></label>
+                      <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_name" type="text" placeholder="YYYY-MM-DD" required>
+                      <label><b>Manager Name</b></label>
+                      <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_type" type="text" placeholder="First Last" required>
+                      <label><b>Phone Number</b></label>
+                      <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="555-555-5555" required>
+                      <label><b>Street Address</b></label>
+                      <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="1234 Something Stree, Ottawa, ON, A1B 2C3" required>
+                      <label><b>Opening Hour</b></label>
+                      <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="09:00" required>
+                      <label><b>Closing Hour</b></label>
+                      <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="21:00" required>
+                    </div>
+
+                    <!-- Button to submit new location data -->
+                    <button class="w3-button w3-hover-shadow w3-round w3-theme" type="submit" name="submit_add_restaurant" value="submit_add_restaurant">Submit Location</button>
+
+                  </form>
+                  <br>
+
+                </div>
+            </div>
+          </div>
+
       </div>
 
       <!-- Favorite Raters Tab -->
@@ -148,7 +215,7 @@
     
     <div class="w3-container w3-third" id="AddReview">
 
-      <h1>Submit A Review</h1><br>
+      <h2><img src="images/review-icon-1.png" style="width:25%"> Review this Restaurant</h2>
       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]). '?'.http_build_query($_GET);?>" method="post">
         <p><input class="w3-input w3-padding-16" type="number" placeholder="1-5 rating for the price" min = '1' max = '5' required name="submit_add_rating_price"></p>
         <p><input class="w3-input w3-padding-16" type="number" placeholder="1-5 rating for the food" min = '1' max = '5' required name="submit_add_rating_food"></p>
@@ -160,16 +227,24 @@
         <p><input class="w3-input w3-padding-16" type="text" placeholder="Comment" required name="submit_add_rating_comment"></p>
 
         <!-- Button to submit Review -->
-        <p><button class="w3-button w3-light-grey w3-section" type="submit" name= "submit_add_rating">SUBMIT REVIEW</button></p>
+        <p><button class="w3-button w3-theme w3-section" type="submit" name= "submit_add_rating">SUBMIT REVIEW</button></p>
       </form>
   
 
 
-        <!-- Submit An Item Review Section -->
+        <!-- ADD BUTTONS-->
         <br>
         <br>
-        <img onclick="document.getElementById('add_item_rating').style.display='block'" class="w3-center w3-btn w3-circle" src="images/submit-icon-1.png" style="width:10%">
-        Add a new Menu Item Review!
+        <img onclick="document.getElementById('add_item_rating').style.display='block'" class="w3-btn w3-circle" src="images/submit-icon-1.png" style="width:25%">
+        Add a Menu Item !
+        <br>
+        <br>
+        <img onclick="document.getElementById('add_item_rating').style.display='block'" class="w3-btn w3-circle" src="images/review-icon-1.png" style="width:25%">
+        Leave a rating!
+        <br>
+        <br>
+        <img onclick="document.getElementById('add_item_rating').style.display='block'" class="w3-btn w3-circle" src="images/review-icon-2.png" style="width:25%">
+        Leave a review!
 
               <!-- ADD NEW RESTAURANT POP-UP-->
               <!-- The contents of the 'add new restaurant' pop-up -->
