@@ -24,7 +24,7 @@
     2018-04-07 - Added a drop down option to select restaurant category, saves selection as variable.
     2018-04-08 - Adjusted Layout, added automatic slideshow, added button to add restaurant.
     2018-04-08 - Added log in/out button, toggles a pop-up with further profile options.
-    2018-04-08 - Added pop-up with entry fields to add a new restaurant.
+    2018-04-08 - Added pop-up with entry fields to add a new restaurant, inserts to database.
 
   Planned:
     -Filters Accordian
@@ -45,7 +45,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-
   	<!-- This code points to a seperate CSS files which contains all the styling rules for the webpage aesthetics -->
     <link href="w3.css" rel="stylesheet">
     <link href="w3-theme-red.css" rel="stylesheet">
@@ -62,7 +61,7 @@
     <!-- The contents at the header of the webpage -->
     <header class="w3-container w3-padding" id="mainHeader">
         
-        <!-- LOG IN/OUT MODAL -->
+        <!-- LOG IN/OUT POP-UP -->
         <!-- A pop up interface with options to log out/in, and change profile settings -->
 
               <!-- The button which toggles the pop-up -->
@@ -71,18 +70,19 @@
                     <img src="images/rater-001.png" style="width:35px">
               </button>
 
-              <!-- The contents of the pop-up -->
+              <!-- The contents of the log out/in pop-up -->
               <div id="profile_login" class="w3-modal">
                 <div class="w3-modal-content w3-card-4">
 
+                    <!-- Header for the log out/in pop-up -->
                     <header class="w3-container w3-theme-d1">
                         <!-- Button to close the pop -->
                         <span onclick="document.getElementById('profile_login').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                         <h2>Your Profile</h2>
                     </header>
 
+                    <!-- Main contents of the log out/in pop-up -->
                     <div class="w3-container">
-
                       <br>
                       <img src="images/rater-001.png" style="width:80px">
                       <p> You are currently logged in as: <b>William</b></p>
@@ -92,8 +92,9 @@
                         <button class="w3-button w3-hover-shadow w3-round w3-theme" name="log_out" value="log_out">Log Out</button>
                       </form>
                       <br>
-
                     </div>
+
+
                 </div>
               </div>
 
@@ -218,19 +219,23 @@
             <img class="slideshow_restaurant_generic" src="images/rest_generic_005.png" style="width:100%">
         </div>
 
+        <!-- Example button -->
         <br>
         <button class="w3-button w3-xlarge w3-circle w3-theme">+</button>
         ADD a restaurant
-        <br>
-        <br>
+
         <!-- The button which toggles the pop-up to add a restaurant -->
+        <br>
+        <br>
         <img onclick="document.getElementById('add_restaurant').style.display='block'" class="w3-center w3-btn w3-circle" src="images/submit-icon-1.png" style="width:25%">
         ADD a new restaurant
 
-              <!-- The contents of the add new restaurant pop-up -->
+              <!-- ADD NEW RESTAURANT POP-UP-->
+              <!-- The contents of the 'add new restaurant' pop-up -->
               <div id="add_restaurant" class="w3-modal">
                 <div class="w3-modal-content w3-card-4">
 
+                    <!-- Header for the 'add restaurant' pop-up -->
                     <header class="w3-container w3-theme-d1">
                         <!-- Button to close the pop -->
                         <span onclick="document.getElementById('add_restaurant').style.display='none'" class="w3-button w3-display-topright">&times;</span>
@@ -240,19 +245,23 @@
                         </h2>
                     </header>
 
+                    <!-- Main contents for the 'add restaurant' pop-up -->
+                    <!-- Form for user to enter new restaurant data with required fields -->
                     <div class="w3-container">
-                      <!-- Form for user to enter new restaurant data with required fields -->
                       <form class="w3-container" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+
                         <div class="w3-section">
                           <label><b>Name</b></label>
-                          <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="enter restaurant name" name="input_add_restaurant_name" required>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_name" type="text" placeholder="enter restaurant name" name="input_add_restaurant_name" required>
                           <label><b>Type</b></label>
-                          <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="enter restaurant type" name="input_add_restaurant_type" required>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_type" type="text" placeholder="enter restaurant type" name="input_add_restaurant_type" required>
                           <label><b>URL</b></label>
-                          <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="enter restaurant URL" name="input_add_restaurant_url" required>
+                          <input class="w3-input w3-border w3-margin-bottom" name="submit_add_restaurant_url" type="text" placeholder="enter restaurant URL" name="input_add_restaurant_url" required>
                         </div>
-                        <!-- Button to lsubmit new restaurant data -->
-                        <button class="w3-button w3-hover-shadow w3-round w3-theme" type="submit" name="log_out" value="submit_add_restaurant">Submit Restaurant</button>
+
+                        <!-- Button to submit new restaurant data -->
+                        <button class="w3-button w3-hover-shadow w3-round w3-theme" type="submit" name="submit_add_restaurant" value="submit_add_restaurant">Submit Restaurant</button>
+
                       </form>
                       <br>
 
@@ -271,6 +280,26 @@
             <button class="w3-button w3-hover-shadow w3-round w3-theme" name="test_button_2" value="test_button_2">Button_2</button>
         </form>
         <br>
+
+
+        <!-- ADD RESTAURANT EXECUTION -->
+        <?php 
+            #the php code in this page points to a seperate php file that contains the code that perfoms the search of the SQL database. 
+
+            #As the code of the seperate file is 'included' with this page any code/variables declared here will be combined with the code of the seperate php file. Variables to do not need to be passed explicitely.
+            $callingPage = "index";
+            $callingButton = $callingTab = $callingCategory = "";
+
+            #Change the variable depending on what button was lasted pressed
+            if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[submit_add_restaurant])){
+              $callingButton = "submit_add_restaurant";
+            }
+
+            #In this way we can recylce the search handler.
+            include 'handle_insertion.php';
+          ?>
+
+
     </div>
 
   
@@ -285,18 +314,6 @@
     </div>
 
 
-    <!-- SEARCH FILTERS ACCORDIAN -->
-    <!-- This javascript supports the toggling of showing/hiding the accordion with the filter opens. By changing the text in the HTML to include or remove "w3-show" it hides or shows the accordion contents. -->
-    <script>
-    function myFunction(id){
-        var x = document.getElementById(id);
-        if(x.className.indexOf("w3-show") == -1){
-            x.className += " w3-show";
-        } else {
-            x.className = x.className.replace(" w3-show", "");
-        }
-    }
-    </script>
 
     <!-- AUTOMATIC SLIDESHOW -->
     <!-- This javascript supports the automatic slideshow. -->

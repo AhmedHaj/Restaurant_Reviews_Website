@@ -1,0 +1,124 @@
+<!-- 
+	This code supports the website  DeepCan.com 
+	This code could copied and used directly within other pages, but for efficiency and maintenance one instances of this code is being used by reference in multiple contexts. In this way it serves as universal search handler.
+  
+	Author: Jonathan Calles 8906650 (jcall057@uottawa.ca) and Ahmed Haj Abdel Khaleq 8223727 (ahaja032@uottawa.ca)
+		Last Updated: 2018-04-08
+
+  	Advisory:
+  		This website is a testing ground. Experimental and non-functional features may result.
+	
+	Development History:
+	    2018-04-08 - Code initiated
+
+  	Planned:
+    	- Set-up the different cases, with all the different SQL inserts to meet the requirements.
+-->
+
+		<?php #this php code receives the search term as input from the user, searches the database, and generates the results.
+
+		//Create variables for connection information to connect to the database
+		//Edit these variables according to your local server environment
+		$port="XXXX";
+		$database="XXXX";
+		$username="XXXX";
+		$password="XXXX";
+		
+		//open a connection to the Postgre database on the slocal server, using the connection information
+		$databaseconnection = pg_connect("host=localhost port=$port dbname=$database user=$username password=$password");
+		
+		//Code and Variables from the referencing page are incorporated with this code by inclusion and can be referenced directly
+		echo "<p>The page which called this PHP code is:  $callingPage</p>";
+		echo "<p>The tab which called this PHP code is:  $callingTab</p>";
+		echo "<p>The button which called this PHP code is:  $callingButton</p>";
+		echo "<p>The filter which called this PHP code is:  $callingFilter</p>";
+		echo "<p>The category which called this PHP code is:  $callingCategory</p>";
+
+		//Perform different SQL insertions depending on the context
+		switch (true) {
+
+			case ($callingPage == "index" and $callingButton == "submit_add_restaurant"):
+
+				//Create a shorthand for the data in the insert form, i.e. a variable we can use.
+				$input1 = $_REQUEST["submit_add_restaurant_name"];
+				$input2 = $_REQUEST["submit_add_restaurant_type"];
+				$input3 = $_REQUEST["submit_add_restaurant_url"];
+				//Manually escape apostrophes in the string
+				$input1 = str_replace("'","''", $input1);
+				$input2 = str_replace("'","''", $input2);
+				$input3 = str_replace("'","''", $input3);
+				//Display the submitted information using the created variables inside an echo command
+				echo "	<p>You entered: $input1</p>
+						<p>You entered: $input2</p>
+						<p>You entered: $input3</p>";
+				//saves the input as an escaped string. Strings need to be sanitized before being used in an SQL query for safety, to escape non-compatible characters, take into account the current charset of the connection, and for security (e.g. SQL injections). SQL queries may not work if not using an escaped string variable.
+				//http://php.net/manual/en/function.pg-escape-string.php
+				$name = pg_escape_string($input1);
+				$type = pg_escape_string($input2);
+				$url = pg_escape_string($input3);
+
+				//Find the last ID to compute the next ID
+				$query = "SELECT MAX(restaurantid) FROM restaurant";
+				$results = pg_query($databaseconnection, $query);
+				$row = pg_fetch_row($results, 0);
+				$value_cut = substr($row[0], 1);
+				$val_next_id_num = $value_cut+1;
+					echo"<p>Row to insert: $val_next_id_num</p>";
+				
+				//create insert statements that will be executed. 
+				//Can use PHP variables, but note the {} that need to go around the PHP variables
+				$query = "INSERT INTO restaurant(RestaurantID,Name,Type,URL) VALUES ('R{$val_next_id_num}','{$name}','{$type}','{$url}');";
+
+				//execute insertion
+				pg_query($databaseconnection, $query);
+
+				//verify insertion was done at the right place
+				$query = "SELECT MAX(restaurantid) FROM restaurant";
+				$results = pg_query($databaseconnection, $query);
+				$row = pg_fetch_row($results, 0);
+				$val_last_id = $row[0];
+					echo"<p>New Last RestaurantID: $val_last_id";
+
+				break;
+
+			case (false):
+				#code
+				break;
+
+			case (false):
+				#code
+				break;
+
+			case (false):
+				#code
+				break;
+
+			case (false):
+				#code
+				break;
+
+			case (false):
+				#code
+				break;
+
+			//perform default if non of the cases match
+			default:
+				# code...
+				break;
+		}
+
+
+
+		//convert the rows from the result into a 2D array
+		//print an error if $results was empty, i.e. nothing was retrieved from the SQL query
+		$arr = pg_fetch_all($results);
+		if(empty($arr)){
+			echo "<p><b> Error - No results matching your query </b></p>";
+			echo "<p><b> Note: the search is case sensitive (for now) </b></p>";
+		}
+
+			
+		//close the database connection 
+		pg_close($databaseconnection);
+		
+		?>
