@@ -330,6 +330,7 @@
 						              			$ratinghtmlcode 
 						              		</ul>
 						              	</div>	
+						            </div
 				          			</a>
 				      			</li>
 				      		</p>";
